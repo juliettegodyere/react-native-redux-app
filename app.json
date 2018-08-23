@@ -1,0 +1,7 @@
+{
+  "name": "micropay",
+  "displayName": "micropay",
+  "codepush_staging_key": "XdYDbU2tYgqzAkLxtu5I0geUevgPBy1Dny0N7",
+  "dev_endpoint": "",
+  "production_endpoint": ""
+}
