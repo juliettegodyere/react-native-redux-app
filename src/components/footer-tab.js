@@ -1,31 +1,50 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { Footer, FooterTab, Button, Icon, Badge } from "native-base";
+
 import autoBind from 'react-autobind';
 
 import GlobalStyles from '../config/styles';
 
 export default class FooterTabView extends Component {
+    
+    constructor(props) {
+        super(props);
+        autoBind(this);
+        this.state = {
+            activeTab: 'Credits'
+        };
+    }
+
+    renderFooterItem(item, index) {
+        let isActive = item.title == this.state.activeTab;
+        let hasBadge = item.notifications > 0;
+        if (hasBadge) {
+            return <Button key={'footer-'+item.title.toLowerCase()} badge vertical style={isActive ? Styles.active : null}>
+                <Badge style={{ flexDirection: 'column', padding: 0, justifyContent: 'center' }}>
+                    <Text style={{ color: '#fff', fontSize: 12 }}> {item.notifications} </Text>
+                </Badge>
+                <Icon name={item.icon} style={isActive ? Styles.active : Styles.inactive} />
+                <Text style={isActive ? Styles.active : Styles.inactive}>{item.title}</Text>
+            </Button>
+        } else {
+            return <Button key={'footer-'+item.title.toLowerCase()} vertical style={isActive ? Styles.active : null}>
+                <Icon name={item.icon} style={isActive ? Styles.active : Styles.inactive} />
+                <Text style={isActive ? Styles.active : Styles.inactive}>{item.title}</Text>
+            </Button>
+        }
+    }
+
     render() {
-        return <Footer>
-            <FooterTab style={Styles.footer}>
-                <Button active vertical style={Styles.active}>
-                    <Icon name="cash" active style={Styles.active} />
-                    <Text style={Styles.active}>Credits</Text>
-                </Button>
-                <Button vertical>
-                    <Icon name="add-circle" style={Styles.inactive} />
-                    <Text style={Styles.inactive}>Topup</Text>
-                </Button>
-                <Button badge vertical>
-                    <Badge style={{ flexDirection: 'column', padding: 0, justifyContent: 'center' }}><Text style={{ color: '#fff', fontSize: 12 }}> 1 </Text></Badge>
-                    <Icon name="swap" style={Styles.inactive} />
-                    <Text style={Styles.inactive}>Activity</Text>
-                </Button>
-                <Button vertical>
-                    <Icon name="ios-settings" style={Styles.inactive} />
-                    <Text style={Styles.inactive}>Settings</Text>
-                </Button>
+        let items = [
+            {title: 'Credits', icon:'ios-cash', notifications: 0},
+            {title: 'Topup', icon:'ios-add-circle', notifications: 0},
+            {title: 'Receipts', icon:'ios-filing', notifications: 10},
+            {title: 'Settings', icon:'ios-settings', notifications: 0}
+        ]
+        return <Footer style={Styles.footer}>
+            <FooterTab style={{backgroundColor: Styles.footer.backgroundColor}}>
+                {items.map(this.renderFooterItem)}
             </FooterTab>
         </Footer >
     }

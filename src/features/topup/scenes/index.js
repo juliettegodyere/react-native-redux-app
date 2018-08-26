@@ -14,9 +14,9 @@ const TopupScene = {
     reducer,
     i18n: { translations },
     render: () => {
-        return <Scene key="topup" title="Topup">
-            <Scene key="voucher-list" component={VoucherListView} hideNavBar={true} title="" panHandlers={null} />
+        return <Scene key="topup" title="Topup" hideNavBar={true} title="" panHandlers={null} >
             <Scene key="category-list" component={CategoryListView} hideNavBar={true} title="" panHandlers={null} />
+            <Scene key="voucher-list" component={VoucherListView} hideNavBar={true} title="" panHandlers={null} />
             <Scene key="checkout" component={CheckoutView} hideNavBar={true} title="" panHandlers={null} />
         </Scene>
     }

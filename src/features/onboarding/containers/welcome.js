@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Button } from 'native-base';
 
@@ -38,12 +38,13 @@ class WelcomeView extends Component {
         let d = this.props.layout;
         return (
             <Container style={[Styles.container]}>
+                <StatusBar barStyle="dark-content" backgroundColor={Styles.inner_panel.backgroundColor} />
                 <View>
                     <View style={[Styles.inner_panel]}>
-                        <Image resizeMode="contain" source={require('../../../assets/img/logo.png')} style={{ width: (d.orientation == 'portrait' ? rw(60, d) : rw(30, d)), height: 100 }} />
+                        <Image resizeMode="contain" source={require('../../../assets/img/logo.png')} style={{ width: (d.orientation == 'portrait' ? rw(60, d) : rw(30, d)), height: 75 }} />
                         <Text style={Styles.h4}>{t('onboarding.welcome.motto')}</Text>
                     </View>
-                    <View style={[Styles.inner_panel, Styles.welcome_panel]}>
+                    <View style={[Styles.inner_panel, Styles.welcome_panel, {flexDirection: 'column', justifyContent: 'space-between'}]}>
                         <View >
                             <Text style={[Styles.h3, Styles.welcome_text]}>{t('onboarding.welcome.title')}</Text>
                             <View style={{ padding: rw(2, d), width: '80%' }}>
@@ -54,9 +55,9 @@ class WelcomeView extends Component {
                                 </Hyperlink>
                             </View>
                         </View>
-                        <View>
-                            <Button transparent large onPress={this.onClickAgree} style={Styles.welcome_button}>
-                                <Text style={[Styles.btn, Styles.btnLarge, Styles.btnPrimary, Styles.welcome_text, { padding: rw(2, d) }]}>
+                        <View style={{width: '100%'}}>
+                            <Button large transparent full onPress={this.onClickAgree} style={[Styles.btnPrimary]}>
+                                <Text style={[Styles.btn, Styles.btnLarge, Styles.btnPrimaryText, Styles.welcome_text, { padding: rw(2, d) }]}>
                                     {t('onboarding.welcome.next')}
                                 </Text>
                             </Button>
@@ -79,7 +80,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(WelcomeView)
 const Styles = StyleSheet.create({
     ...FeatureStyles,
     inner_panel: {
-        backgroundColor: 'transparent',
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         height: '50%', // 50% of screen height
         width: '100%', // 50% of screen width

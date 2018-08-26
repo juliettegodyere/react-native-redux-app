@@ -14,8 +14,8 @@ const CreditScene = {
     i18n: { translations },
     render: () => {
         return <Scene key="credits" title="Credits">
-            <Scene key="credit-detail" component={CreditDetailView} hideNavBar={true} title="" panHandlers={null} />
             <Scene key="credit-list" component={CreditListView} hideNavBar={true} title="" panHandlers={null} />
+            <Scene key="credit-detail" component={CreditDetailView} hideNavBar={true} title="" panHandlers={null} />
         </Scene>
     }
 }

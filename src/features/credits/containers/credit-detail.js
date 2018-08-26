@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Icon, Badge, Thumbnail, Card, Tabs, Tab, Separator, TabHeading } from 'native-base';
 
@@ -31,7 +31,25 @@ class CreditDetailView extends Component {
     }
 
     renderTabHeading(label) {
-        return <TabHeading style={Styles.header}><Text>{label}</Text></TabHeading>
+        return <TabHeading style={Styles.tabs}><Text style={Styles.tabs}>{label}</Text></TabHeading>
+    }
+
+    renderProgress() {
+        return  <AnimatedCircularProgress
+                    size={40}
+                    width={2}
+                    fill={100}
+                    duration={60000}
+                    rotation={0}
+                    tintColor={Styles.link.color}
+                    onAnimationComplete={() => console.log('onAnimationComplete')}
+                    backgroundColor="#dfdfdf"
+                >
+                    {
+                        (fill) => (
+                            <Text style={[Styles.small, Styles.no_padding]}>{((100 - fill) * 0.6).toFixed(0)}</Text>
+                        )
+                    }</AnimatedCircularProgress>
     }
 
     render() {
@@ -40,47 +58,33 @@ class CreditDetailView extends Component {
         //items = emptyItems;
         return (
             <Container style={[Styles.container]}>
-                <Header style={Styles.header} hasTabs>
+                <Header style={[Styles.headerAlt, {borderBottomWidth: 0}]} hasTabs>
+                    <StatusBar barStyle="dark-content" backgroundColor={Styles.headerAlt.backgroundColor} />
                     <Left><Icon name='arrow-back' /></Left>
                     <Body >
-                        <Title style={Styles['header.title']}>Lekki Concession Company</Title>
+                        <Title style={Styles['headerAlt.title']}>Instant Pay</Title>
                     </Body>
-                    <Right />
+                    <Right/>
                 </Header>
 
-                <Tabs tabBarUnderlineStyle={{ backgroundColor: '#4B77BE' }}>
-                    <Tab heading={this.renderTabHeading('Scan')} style={Styles.header}>
+                <Tabs tabBarUnderlineStyle={{ backgroundColor: Styles.tabs.borderColor }}>
+                    <Tab heading={this.renderTabHeading('Scan')}>
                         <Content containerStyle={{ backgroundColor: '#fff' }}>
                             <View style={{ justifyContent: 'space-around', paddingTop: 0, paddingBottom: 10, alignItems: 'center' }}>
                                 <Image resizeMode="contain" source={require('../../../assets/img/qrcode.png')}
                                     style={{ width: (d.orientation == 'portrait' ? rw(60, d) : rw(30, d)), height: 250, }} />
-
-
-                                <AnimatedCircularProgress
-                                    size={40}
-                                    width={2}
-                                    fill={100}
-                                    duration={60000}
-                                    rotation={0}
-                                    tintColor="#4B77BE"
-                                    onAnimationComplete={() => console.log('onAnimationComplete')}
-                                    backgroundColor="#dfdfdf"
-                                >
-                                    {
-                                        (fill) => (
-
-                                            <Text style={[Styles.small, Styles.no_padding]}>{((100 - fill) * 0.6).toFixed(0)}</Text>
-
-                                        )
-                                    }</AnimatedCircularProgress>
-
+                                
                             </View>
 
                             <List>
+
+                                <ListItem last>
+                                    <Body style={{alignItems:'center'}}><Text>Valid with Lekki Concession Company</Text></Body>
+                                </ListItem>
                                 <Separator bordered />
                                 <ListItem>
                                     <Left><Text>Balance</Text></Left>
-                                    <Right><Text>{i18n.toCurrency(15000, { precision: 2 })}</Text></Right>
+                                    <Body><Text style={{textAlign: 'right'}}>₦{i18n.toNumber(15000, { precision: 2 })}</Text></Body>
                                 </ListItem>
                                 <ListItem>
                                     <Left><Text>Topup your credit</Text></Left>
@@ -94,35 +98,22 @@ class CreditDetailView extends Component {
                         </Content>
                     </Tab>
 
-                    <Tab heading={this.renderTabHeading('Code')} style={Styles.header}>
+                    <Tab heading={this.renderTabHeading('Code')}>
                         <Content containerStyle={{ backgroundColor: '#fff' }}>
                             <View style={{ justifyContent: 'center', alignItems: 'center', paddingTop: 10, paddingBottom: 10 }}>
                                 <Text style={[Styles.link, { fontSize: rf(12, d) }]}>AXV3</Text>
                                 <Text style={[Styles.link, { fontSize: rf(12, d) }]}>21C9</Text>
-                                <AnimatedCircularProgress
-                                    size={40}
-                                    width={2}
-                                    fill={100}
-                                    duration={60000}
-                                    rotation={0}
-                                    tintColor="#4B77BE"
-                                    onAnimationComplete={() => console.log('onAnimationComplete')}
-                                    backgroundColor="#dfdfdf"
-                                >
-                                    {
-                                        (fill) => (
-
-                                            <Text style={[Styles.small, Styles.no_padding]}>{((100 - fill) * 0.6).toFixed(0)}</Text>
-
-                                        )
-                                    }</AnimatedCircularProgress>
+                                {this.renderProgress()}
                             </View>
 
                             <List>
+                                <ListItem last>
+                                    <Body style={{alignItems:'center'}}><Text>Valid with Lekki Concession Company</Text></Body>
+                                </ListItem>
                                 <Separator bordered />
                                 <ListItem>
                                     <Left><Text>Balance</Text></Left>
-                                    <Right><Text>{i18n.toCurrency(15000, { precision: 2 })}</Text></Right>
+                                    <Body><Text style={{textAlign: 'right'}}>₦{i18n.toNumber(15000, { precision: 2 })}</Text></Body>
                                 </ListItem>
                                 <ListItem>
                                     <Left><Text>Topup your credit</Text></Left>

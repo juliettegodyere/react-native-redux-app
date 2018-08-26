@@ -1,4 +1,4 @@
-package com.micropay;
+package com.micropay.go;
 
 import android.os.Bundle;
 import android.content.res.Configuration;
@@ -14,7 +14,7 @@ public class MainActivity extends ReactActivity {
      */
     @Override
     protected String getMainComponentName() {
-        return "micropay";
+        return "micropay-go";
     }
 
     static String currentLocale;

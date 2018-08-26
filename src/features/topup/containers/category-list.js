@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, FlatList, StyleSheet } from 'react-native';
 
-import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Separator, Icon, Item, Input } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Separator, Icon, Item, Input, Thumbnail } from 'native-base';
 
 import FAIcon from 'react-native-vector-icons/FontAwesome5';
 
@@ -39,6 +39,12 @@ class CategoryListView extends Component {
 
     }
 
+    renderFeaturedItem({item}) {
+        return <View style={{width:rw(22), paddingTop: rh(1.5), paddingRight: rw(5)}} >
+            <Button transparent large rounded onPress={() => console.log('press')}><Thumbnail source={item.icon_url}/></Button>
+        </View>
+    }
+
     render() {
         let d = this.props.layout;
         let items = [
@@ -52,24 +58,83 @@ class CategoryListView extends Component {
             { code: 'retail', name: 'Retail Outlets', icon: 'shopping-basket' },
             { code: 'digital', name: 'Digital Content', icon: 'cloud-download-alt' },
         ]
+        let featuredItems = [
+            {
+                title: 'Lekki Concession Company',
+                subtitle: 'Tolls',
+                description: null,
+                icon_url: require('../../../assets/img/lcc.png'),
+                price: 15000,
+                priceLabel: 'Balance',
+                currency: '₦',
+                badgeText: null,//'10% Off'
+            },
+            {
+                title: 'Chicken Republic',
+                subtitle: 'Food & Drink',
+                description: null,
+                icon_url: require('../../../assets/img/chickenrepublic.png'),
+                price: 1260,
+                priceLabel: 'Balance',
+                currency: '₦',
+                badgeText: null,//'10% Off'
+            },
+            {
+                title: 'Total Nigeria Plc',
+                subtitle: 'Fuel Stations',
+                description: null,
+                icon_url: require('../../../assets/img/total.jpg'),
+                price: 28800.29,
+                priceLabel: 'Balance',
+                currency: '₦',
+                badgeText: null,//'10% Off'
+            },
+            {
+                title: 'Mobile Nigeria Plc',
+                subtitle: 'Fuel Stations',
+                description: null,
+                icon_url: require('../../../assets/img/mobil.jpg'),
+                price: 28800.29,
+                priceLabel: 'Balance',
+                currency: '₦',
+                badgeText: null,//'10% Off'
+            },
+            {
+                title: 'Uber',
+                subtitle: 'Taxi Services',
+                description: null,
+                icon_url: require('../../../assets/img/uber.png'),
+                price: 8900.50,
+                priceLabel: 'Balance',
+                currency: '₦',
+                badgeText: null,//'10% Off'
+            },
+
+        ]
         return (
             <Container style={[Styles.container]}>
                 <Header searchBar rounded style={Styles.header}>
+                    <StatusBar backgroundColor={Styles.header.backgroundColor} />
                     <Item>
                         <Icon name="ios-search" />
                         <Input keyboardType="web-search" placeholder="Search by keyword" />
                     </Item>
                 </Header>
                 <Content contentContainerStyle={{ width: '100%', justifyContent: 'space-evenly' }} >
-                    <View style={{ justifyContent: 'space-evenly', padding: rh(2.5, d), paddingBottom: 0 }}>
-                        <Text style={Styles.h2}>Deals</Text>
+                    <View style={{ justifyContent: 'space-evenly', padding: rh(2.5, d)}}>
+                        <Text style={Styles.h5}>Featured Deals</Text>
+                        <FlatList
+                            horizontal
+                            data={featuredItems}
+                            renderItem={this.renderFeaturedItem}
+                            keyExtractor={(item, index) => 'featured-item-' + index}
+                            />
                     </View>
                     <List>
                         <Separator bordered />
                         {
                             items.map(this.renderCategory)
                         }
-                        <Separator bordered />
                     </List>
                 </Content >
             </Container >

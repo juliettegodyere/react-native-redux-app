@@ -58,7 +58,6 @@ export default class ProductCard extends Component {
             <CardItem button style={Styles.price_panel} onPricePress={this.props.onPricePress}>
                 <Left>
                     <View vertical>
-                        <Text>{priceLabel}</Text>
                         <Button badge small full transparent style={[Styles.h3, { paddingBottom: 0, textAlign: 'left' }]}>
                             <Text style={[Styles.h5, Styles.link, Styles.no_padding]}>{this.props.currency} </Text>
                             <Text style={[Styles.h3, Styles.link, Styles.no_padding]}>{i18n.toNumber(priceParts.integer, { precision: 0 })}</Text>

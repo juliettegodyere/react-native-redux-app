@@ -7,7 +7,7 @@ import autoBind from 'react-autobind';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { TopupActions } from '../redux/actions';
+import { ActivityActions } from '../redux/actions';
 
 import { Actions } from 'react-native-router-flux';
 
@@ -16,7 +16,7 @@ import ListItemTextInput from '../../../components/listitem_text_input';
 import { t, responsiveHeight as rh, responsiveWidth as rw, responsiveFontSize as rf } from '../../../utils';
 import FeatureStyles from '../config/styles';
 
-class CategoryListView extends Component {
+class TransactionSearchView extends Component {
     constructor(props) {
         super(props);
         autoBind(this);
@@ -35,7 +35,7 @@ class CategoryListView extends Component {
                 <Header>
                     <Left><Icon name='arrow-back' /></Left>
                     <Body >
-                        <Title>Topups</Title>
+                        <Title>Transaction Search</Title>
                     </Body>
                     <Right><Button transparent onPress={this.onNext}><Text>Next</Text></Button></Right>
                 </Header>
@@ -53,9 +53,9 @@ function mapStateToProps(state) {
     return { onboarding: state.onboarding, layout: state.layout }
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators(TopupActions, dispatch)
+    return bindActionCreators(ActivityActions, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CategoryListView)
+export default connect(mapStateToProps, mapDispatchToProps)(TransactionSearchView)
 
 const Styles = StyleSheet.create({
     ...FeatureStyles

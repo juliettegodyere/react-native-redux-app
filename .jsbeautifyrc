@@ -1,0 +1,6 @@
+{
+    "js": {
+        "keep_array_indentation": true,
+        "brace_style": "preserve-inline"
+    }
+}
