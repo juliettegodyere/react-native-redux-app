@@ -3,7 +3,7 @@ import { Scene } from 'react-native-router-flux';
 
 import reducer from '../redux/reducer';
 
-import CategoryListView from '../containers/category-list';
+import TransactionListView from '../containers/transaction-list';
 
 import * as translations from '../config/locale';
 
@@ -13,7 +13,7 @@ const ActivityScene = {
     i18n: { translations },
     render: () => {
         return <Scene key="activity" title="Activity">
-            <Scene key="category-list" component={CategoryListView} hideNavBar={true} title="" panHandlers={null} />
+            <Scene key="transaction-list" component={TransactionListView} hideNavBar={true} title="" panHandlers={null} />
         </Scene>
     }
 }

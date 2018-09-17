@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Separator, Icon, Item, Input, Subtitle } from 'native-base';
 
@@ -77,6 +77,7 @@ class VoucherListView extends Component {
         return (
             <Container style={[Styles.container]}>
                 <Header style={Styles.header}>
+                    <StatusBar backgroundColor={Styles.header.backgroundColor} />
                     <Left><Icon name='arrow-back' /></Left>
                     <Body >
                         <Title style={Styles['header.title']}>Results</Title>
@@ -87,7 +88,7 @@ class VoucherListView extends Component {
                 </Header>
                 <Content padder contentContainerStyle={{ width: '100%', justifyContent: 'space-evenly' }} >
                     <View style={{ justifyContent: 'space-evenly', padding: rh(2.5, d), paddingBottom: 0 }}>
-                        <Text style={Styles.h4}>300 deals found</Text>
+                        <Text style={Styles.h4}>We found 300 deals</Text>
                     </View>
 
                     {items.map((item, index) => {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Icon, Badge, Thumbnail, Card } from 'native-base';
 
@@ -33,7 +33,7 @@ class CreditListView extends Component {
         let d = this.props.layout;
         let emptyItems = [{
             title: 'It looks like you have no credit yet',
-            subtitle: 'Tap the + button to get started',
+            subtitle: 'Tap the + button below to get started',
             description: null,
             icon_url: null,
             price: 0,
@@ -75,17 +75,19 @@ class CreditListView extends Component {
 
         ]
         //items = emptyItems;
+        let hasCredits = items !== emptyItems;
         return (
             <Container style={[Styles.container]}>
                 <Header style={Styles.header} noLeft>
+                    <StatusBar barStyle="dark-content" backgroundColor={Styles.header.backgroundColor} />
                     <Left />
                     <Body >
                         <Title style={Styles['header.title']}>Credits</Title>
                     </Body>
                     <Right >
                         <Button badge transparent style={[Styles.h5, { textAlign: 'right' }]}>
-                            <Text style={{ color: '#4B77BE' }}>Bonus </Text>
-                            <Badge success style={{ justifyContent: 'center' }}><Text style={{ color: '#fff', padding: 4, fontSize: 12 }}>100</Text></Badge>
+                            <Text style={Styles["header.link"]}>Bonus </Text>
+                            <Badge success style={{ justifyContent: 'center' }}><Text style={{ color: '#fff', padding: 4, fontSize: 12 }}>{hasCredits ? '15.5K' : '0'}</Text></Badge>
                         </Button>
                     </Right>
                 </Header>
@@ -93,7 +95,7 @@ class CreditListView extends Component {
                     {items.map((item, index) => {
                         return <ProductCard key={'product-' + index} {...item} />
                     })}
-                    <CircularButton buttonIcon="add" />
+                    {!hasCredits ? <View style={Styles.add_button_panel}><CircularButton buttonIcon="add" style={Styles.add_button}/></View> : null}
                 </Content >
             </Container >
         );
@@ -109,5 +111,21 @@ function mapDispatchToProps(dispatch) {
 export default connect(mapStateToProps, mapDispatchToProps)(CreditListView)
 
 const Styles = StyleSheet.create({
-    ...FeatureStyles
+    ...FeatureStyles,
+    add_button_panel: {
+        borderRadius: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        margin: 15,
+        //backgroundColor: '#F2F6fE'//FeatureStyles.btnPrimary.backgroundColor
+    },
+    add_button: {
+        width: 100, height: 100, 
+        elevation:10,
+        borderWidth: 1,
+        fontSize: 60,
+        //borderColor: FeatureStyles.link.color,
+        color: FeatureStyles.link.color,
+        backgroundColor: '#FFF',//'#F2F6fE'
+    }
 });

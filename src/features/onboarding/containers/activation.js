@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Icon, Separator } from 'native-base';
 
@@ -32,17 +32,18 @@ class InvitationView extends Component {
         let d = this.props.layout;
         return (
             <Container style={[Styles.container]}>
-                <Header>
+                <Header style={Styles.header}>
+                    <StatusBar barStyle="dark-content" backgroundColor={Styles.header.backgroundColor} />
                     <Left><Icon name='arrow-back' /></Left>
                     <Body >
-                        <Title>Activate</Title>
+                        <Title style={Styles["header.title"]}>Activate</Title>
                     </Body>
-                    <Right><Button transparent onPress={this.onNext}><Text>Next</Text></Button></Right>
+                    <Right><Button transparent onPress={this.onNext}><Text style={Styles["header.link"]}>Next</Text></Button></Right>
                 </Header>
                 <Content contentContainerStyle={{ width: '100%', justifyContent: 'space-evenly' }} >
                     <View style={{ height: rh(40, d), justifyContent: 'space-evenly', padding: rh(5, d) }}>
                         <Text style={[Styles.h4, { textAlign: 'center' }]}>We have sent an SMS that contains a 6-digit activation code to +2348028475816</Text>
-                        <Text style={[Styles.h4, { textAlign: 'center' }]}>To activate your account, please enter the code below</Text>
+                        <Text style={[Styles.h4, { textAlign: 'center' }]}>Please enter the code below</Text>
                     </View>
                     <View>
                         <Separator bordered />

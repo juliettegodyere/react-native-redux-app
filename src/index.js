@@ -51,7 +51,7 @@ export default class App extends Component {
     }
 
     renderTabbedScenes(scene, key) {
-        return <Scene tabs key={key} tabBarComponent={FooterTabView} tabBarPosition="bottom">
+        return <Scene tabs key={key} hideTabBar={false} tabBarComponent={FooterTabView} tabBarPosition="bottom">
             {scene.map(subScene => subScene.render(this.state))}
         </Scene>
     }
@@ -63,7 +63,7 @@ export default class App extends Component {
                 <Root onLayout={this.onLayoutChanged}>
                     <Router>
                         <Modal>
-                            <Scene key="root">
+                            <Scene key="root" hideNavBar={true} title="" panHandlers={null} >
                                 {Config.scenes.map((scene, index) => {
                                     return Array.isArray(scene) ? this.renderTabbedScenes(scene, "tab-scene-" + index) : scene.render(this.state)
                                 })}
@@ -76,4 +76,4 @@ export default class App extends Component {
     }
 }
 
-AppRegistry.registerComponent('micropay', () => App);
+AppRegistry.registerComponent('micropay-go', () => App);

@@ -33,7 +33,7 @@ export default class PhoneInput extends Component {
     render() {
         return <List>
             <ListItem noIndent >
-                <Left><Text style={Styles.p}>{intl_dialing_codes[this.state.intl_dialing_code]}</Text></Left>
+                <Left><Text style={[Styles.p, Styles.link]}>{intl_dialing_codes[this.state.intl_dialing_code]}</Text></Left>
                 <Right><Icon name="arrow-forward" /></Right>
             </ListItem>
             <ListItemPhoneInput

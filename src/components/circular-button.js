@@ -16,15 +16,31 @@ export default class CircularButton extends Component {
         autoBind(this);
         this.state = {};
     }
-
+   
     render() {
         let d = this.props.layout;
+        
+        let buttonStyle = {width: 100, height: 100, fontSize: Styles.h3.fontSize, ...this.props.style};
+        let width = buttonStyle.width || 100;
+        let height = buttonStyle.height|| 100;
+        let marginTop = width / 5;
+        let marginBottom = width / 5;
+        let borderRadius = width / 2;
+        let shadowRadius = width / 10;
+
         let content = this.props.buttonText
-            ? <Text style={Styles.h3}>{this.props.buttonText}</Text>
-            : <Icon name={this.props.buttonIcon} style={{ color: '#4B77BE', fontSize: 75 }} />
+        ? <Text style={[Styles.h3, {color: buttonStyle.color, paddingBottom:0}]}>{this.props.buttonText}</Text>
+        : <Icon name={this.props.buttonIcon} style={{color: buttonStyle.color, fontSize: buttonStyle.fontSize }} />
+
         return <View>
-            <Card style={Styles.circular_button_panel}>
-                <Button onPress={() => { console.log('xx') }} rounded bordered style={Styles.circular_button}>
+            <Card style={[{ 
+                    alignSelf: 'center', justifyContent: 'center', borderColor: 'transparent', 
+                    width, height, elevation: buttonStyle.elevation,
+                    marginTop, marginBottom, borderRadius, shadowRadius}]}>
+                <Button style={[{ 
+                    justifyContent: 'center', borderColor: '#dfdfdf',
+                    width, height, borderRadius }, buttonStyle, {elevation:0}]}
+                    onPress={() => { console.log('xx') }} rounded>
                     {content}
                 </Button>
             </Card>
@@ -40,10 +56,4 @@ CircularButton.propTypes = {
     height: PropTypes.number,
 };
 
-const Styles = StyleSheet.create({
-    ...GlobalStyles,
-    circular_button_panel: { alignSelf: 'center', borderColor: 'transparent', elevation: 0, width: 100, height: 100, marginTop: 20, marginBottom: 20, borderRadius: 50, shadowRadius: 10 },
-    circular_button: { justifyContent: 'center', borderColor: '#dfdfdf', width: 100, height: 100, borderRadius: 50 }
-});
-
-
+const Styles = GlobalStyles

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, StyleSheet } from 'react-native';
 
 import { Container, Header, Content, Left, Right, Body, List, ListItem, Button, Title, Icon, Separator } from 'native-base';
 
@@ -32,12 +32,13 @@ class InvitationView extends Component {
         let d = this.props.layout;
         return (
             <Container style={[Styles.container]}>
-                <Header>
+                <Header style={Styles.header}>
+                    <StatusBar barStyle="dark-content" backgroundColor={Styles.header.backgroundColor} />
                     <Left><Icon name='arrow-back' /></Left>
                     <Body >
-                        <Title>Your Number</Title>
+                        <Title style={Styles["header.title"]}>Your Number</Title>
                     </Body>
-                    <Right><Button transparent onPress={this.onNext}><Text>Next</Text></Button></Right>
+                    <Right><Button transparent onPress={this.onNext}><Text style={Styles["header.link"]}>Next</Text></Button></Right>
                 </Header>
                 <Content contentContainerStyle={{ width: '100%', justifyContent: 'space-evenly' }} >
                     <View style={{ height: rh(30, d), justifyContent: 'space-evenly', padding: rh(5, d) }}>

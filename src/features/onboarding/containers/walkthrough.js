@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, StatusBar, StyleSheet } from 'react-native';
 
-import { Container, Header, Content, Left, Right, Body, Badge, List, ListItem, Button } from 'native-base';
+import { Container, Header, Content, Left, Right, Body, Title, List, ListItem, Button } from 'native-base';
 
 import autoBind from 'react-autobind';
 import { bindActionCreators } from 'redux';
@@ -33,7 +33,7 @@ class WalkthroughView extends Component {
         return <ListItem key={index} thumbnail style={{ paddingBottom: rh(5) }}>
             <Left>
                 <View style={[Styles.walkthrough_index]}>
-                    <Text style={[Styles.h3, { paddingBottom: rh(0), color: 'white' }]}>{index + 1}</Text>
+                    <Text style={[Styles.h3, Styles.link,{ paddingBottom: rh(0) }]}>{index + 1}</Text>
                 </View>
             </Left>
             <Body>
@@ -47,21 +47,26 @@ class WalkthroughView extends Component {
         let d = this.props.layout;
         let items = [
             { title: 'Sign Up', description: 'All you need is your phone number' },
-            { title: 'Save Money', description: 'You can buy discounted prepaid credit for your regular purchases such as food, transport tickets, toll fees etc' },
+            { title: 'Save Money', description: 'Buy discounted prepaid credit for your regular purchases such as food, transport tickets, toll fees etc' },
             { title: 'Save Time', description: 'Anywhere you need to pay, just scan the Micropay app. It\'s super fast' }
         ];
 
         return (
             <Container style={[Styles.container]}>
-                <Header>
+                
+                <Header style={Styles.header} noLeft>
+                    <StatusBar barStyle="dark-content" backgroundColor={Styles.header.backgroundColor} />
+                    <Body>
+                        <Title style={Styles["header.title"]}>Brief Intro</Title>
+                    </Body>
                     <Right>
-                        <Button transparent onPress={this.onNext}><Text>Next</Text></Button>
+                        <Button transparent onPress={this.onNext}><Text style={Styles["header.link"]}>Skip</Text></Button>
                     </Right>
                 </Header>
                 <Content contentContainerStyle={{ width: '100%', justifyContent: 'space-evenly' }} >
                     <View style={{ justifyContent: 'space-evenly', padding: rh(2.5, d) }}>
-                        <Text style={Styles.h1}>Let's get you started</Text>
-                        <Text style={Styles.h3}>First of all, this is how it works</Text>
+                        <Text style={Styles.h1}>Hi there,</Text>
+                        <Text style={Styles.h3}>Here is how Micropay GO works</Text>
                         <List>{
                             items.map(this.renderWalkthroughStep)
                         }
@@ -89,6 +94,6 @@ const Styles = StyleSheet.create({
         justifyContent: 'center',
         height: rh(8),
         width: rh(8),
-        backgroundColor: '#4B77BE'
+        backgroundColor: '#F2F6fE'//FeatureStyles.btnPrimary.backgroundColor
     }
 });

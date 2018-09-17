@@ -1,4 +1,4 @@
-package com.micropay;
+package com.micropay.go;
 
 import android.app.Application;
 
