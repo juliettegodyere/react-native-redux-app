@@ -1,128 +1,60 @@
-import { Endpoints } from '../../../config/endpoints';
+//import { Endpoints } from '../../../config/endpoints';
+//import Events from '../../../config/datasets/events';
+import { Endpoints } from '../config/endpoints';
 import { AsyncFlowStatus, HttpUtils, LogUtils } from '../../../utils';
 
 const Types = {
-    ACCEPT_LEGAL_AGREEMENTS: "ACCEPT_LEGAL_AGREEMENTS",
-
-    SET_INTRO_WALKTHROUGH_INDEX: "SET_INTRO_WALKTHROUGH_INDEX",
-
-    SEND_INVITE_USER_REQUEST: "SEND_INVITE_USER_REQUEST",
-    RECEIVE_INVITE_USER_RESPONSE: "RECEIVE_INVITE_USER_RESPONSE",
-
-    SEND_ACTIVATE_USER_REQUEST: "SEND_ACTIVATE_USER_REQUEST",
-    RECEIVE_ACTIVATE_USER_RESPONSE: "RECEIVE_ACTIVATE_USER_RESPONSE"
+    GET_USER_DATA_LOADING: "GET_USER_DATA_LOADING",
+    GET_USER_DATA_RECIVED: "GET_USER_DATA_RECIVED",
+    GET_USER_DATA_ERROR:   "GET_USER_DATA_ERROR"
 }
 
 const Actions = {
     // Legal Agreements
-    acceptLegalAgreements: () => {
-        return { type: Types.ACCEPT_LEGAL_AGREEMENTS, data: { legal_acceptance_date: Date.now() } }
+    fetchEventsLoading: () => {
+        return { type: Types.GET_USER_DATA_LOADING }
     },
+    fetchEventsReceived: (users) => {
+        return { type: Types.GET_USER_DATA_RECIVED, data: {users } }
+    },
+    fetchEventsError: (error) => {
+        return { type: Types.GET_USER_DATA_ERROR, data: { error} }
+    },
+}
 
-    // Walkthrough
-    setIntroWalkthroughIndex: (index) => {
-        return { type: Types.SET_INTRO_WALKTHROUGH_INDEX, data: { walktrough_index: index } }
-    },
+function fetchEventsLoading() {
+    return Actions.fetchUserLoading();
+}
+function fetchEventsReceived(users) {
+    return Actions.fetchUserReceived(users);
+}
+function fetchUserError(error) {
+    return Actions.fetchUserError(error);
+}
 
-    // Invitation
-    sendInviteUserRequest: (channel) => {
-        return { type: Types.SEND_INVITE_USER_REQUEST, data: { channel, status: AsyncFlowStatus.PENDING } }
-    },
-    receiveInviteUserResponse: (data) => {
-        return { type: Types.RECEIVE_INVITE_USER_RESPONSE, data }
-    },
-
-    // Activation
-    sendActivateUserRequest: () => {
-        return { type: Types.SEND_ACTIVATE_USER_REQUEST, data: { status: AsyncFlowStatus.PENDING } }
-    },
-    receiveActivateUserResponse: (data) => {
-        return { type: Types.RECEIVE_ACTIVATE_USER_RESPONSE, data: { credentials: data.body } }
+function fetchEvents(){
+    return dispatch => {
+        dispatch(fetchEventsLoading());
+        return fetch('../../../config/datasets/events')
+            .then(handleErrors)
+            .then(res => res.json())
+            .then(json => {
+                dispatch(fetchEventsReceived(json));
+                //console.log(json);
+                return json;
+            })
+            .catch(error => dispatch(fetchEventsError(error)));
+    };;
+}
+//Handle HTTP errors since fetch won't
+function handleErrors(response){
+    if(!response.ok){
+        throw Error(response.statusText);
     }
+    return response;
 }
 
-const InvitationFlowStatus = Object.assign({}, AsyncFlowStatus, {
-    FORBIDDEN: "forbidden"
-})
-const ActivationFlowStatus = Object.assign({}, AsyncFlowStatus, {
-    REJECTED: "rejected"
-})
-
-//
-// LEGAL AGREEMENT ACTIONS
-//
-function acceptLegalAgreements() {
-    return Actions.acceptLegalAgreements();
+export const OnBoardingActions = {
+    // Types,
+    // fetchEvents
 }
-
-//
-// WALKTHROUGH ACTIONS
-//
-function setIntroWalkthroughIndex(index) {
-    return Actions.setIntroWalkthroughIndex(index);
-}
-
-//
-// INVITATION ACTIONS
-//
-function inviteUser(channel, params) {
-    return async (dispatch, getState) => {
-        dispatch(Actions.sendInviteUserRequest(channel));
-
-        let options = {
-            method: 'POST',
-            body: HttpUtils.buildFormUrlEncodedBody(params)
-        };
-        try {
-            let response = await fetch(Endpoints.auth.invite, options);
-            HttpUtils.handleAndDispatchResponse(dispatch, response, Actions.receiveInviteUserResponse);
-        } catch (error) {
-            LogUtils.error(error);
-        }
-    }
-}
-
-//
-// ACTIVATION ACTIONS
-//
-function activateUser(params) {
-    return async (dispatch) => {
-        dispatch(Actions.sendActivateUserRequest());
-
-        let options = {
-            method: 'POST',
-            body: HttpUtils.buildFormUrlEncodedBody(params)
-        };
-        try {
-            let response = await fetch(Endpoints.auth.activate, options);
-            HttpUtils.handleAndDispatchResponse(dispatch, response, Actions.receiveActivateUserResponse);
-        } catch (error) {
-            LogUtils.error(error);
-        }
-    }
-}
-
-export const OnboardingActions = {
-    Types,
-    InvitationFlowStatus,
-    ActivationFlowStatus,
-    acceptLegalAgreements,
-    setIntroWalkthroughIndex,
-    inviteUser,
-    activateUser
-}
-/*
-1. Invite a user by phone number or email
-2. Server processes the request by
-    a. Adding an invitation object into the db
-    b. Generating a 6-digit activation code
-    c. Sending the activation code and the activation URL  to the invitee
-3. User goes to URL and enters activation code
-4. User chooses a login option i.e. direct, oauth, or phone
-    a. Direct
-        i. If the user exists, they are prompted to type in their password
-        ii. Otherwise, the system creates a new account
-    b. OAuth - the system creates or updates the social profile upon successful auth
-    c. Phone - the system creates or updates the social profile
-5. The system returns a bearer token or session ID
-*/

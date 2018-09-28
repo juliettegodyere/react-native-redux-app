@@ -1,54 +1,56 @@
 {
-    "name": "micropay-go",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node node_modules/react-native/local-cli/cli.js start",
-        "test": "jest",
-        "react-devtools": "react-devtools"
-    },
-    "rnpm": {
-        "assets": [
-            "./app/assets/fonts"
-        ]
-    },
-    "dependencies": {
-        "lodash": "^4.17.10",
-        "moment": "^2.22.2",
-        "native-base": "^2.7.2",
-        "npm": "^6.3.0",
-        "prop-types": "^15.6.2",
-        "react": "16.4.1",
-        "react-autobind": "^1.0.6",
-        "react-native": "0.56.0",
-        "react-native-animatable": "^1.2.4",
-        "react-native-circular-progress": "^1.0.1",
-        "react-native-code-push": "^5.4.1",
-        "react-native-hyperlink": "0.0.14",
-        "react-native-i18n": "^2.0.15",
-        "react-native-responsive-dimensions": "^1.0.2",
-        "react-native-router-flux": "^4.0.0-beta.31",
-        "react-native-svg": "^6.5.2",
-        "react-native-vector-icons": "^5.0.0",
-        "react-redux": "^4.4.6",
-        "redux": "3.6.0",
-        "redux-persist": "^5.10.0",
-        "redux-thunk": "^2.3.0",
-        "rtl-detect": "^1.0.2"
-    },
-    "devDependencies": {
-        "babel-jest": "23.4.2",
-        "babel-preset-react-native": "5.0.2",
-        "jest": "23.4.2",
-        "react-devtools": "^3.2.3",
-        "react-test-renderer": "16.4.1"
-    },
-    "jest": {
-        "preset": "react-native",
-        "setupFiles": [
-            "<rootDir>/node_modules/appcenter/test/AppCenterMock.js",
-            "<rootDir>/node_modules/appcenter-analytics/test/AppCenterAnalyticsMock.js",
-            "<rootDir>/node_modules/appcenter-crashes/test/AppCenterCrashesMock.js"
-        ]
-    }
+  "name": "micropay-go",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "react-devtools": "react-devtools"
+  },
+  "rnpm": {
+    "assets": [
+      "./app/assets/fonts"
+    ]
+  },
+  "dependencies": {
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
+    "native-base": "^2.7.2",
+    "npm": "^6.3.0",
+    "prop-types": "^15.6.2",
+    "react": "16.4.1",
+    "react-autobind": "^1.0.6",
+    "react-native": "0.56.0",
+    "react-native-animatable": "^1.2.4",
+    "react-native-circular-progress": "^1.0.1",
+    "react-native-code-push": "^5.4.1",
+    "react-native-easy-grid": "0.2.0",
+    "react-native-hyperlink": "0.0.14",
+    "react-native-i18n": "^2.0.15",
+    "react-native-responsive-dimensions": "^1.0.2",
+    "react-native-router-flux": "^4.0.0-beta.31",
+    "react-native-svg": "^6.5.2",
+    "react-native-swiper": "1.5.13",
+    "react-native-vector-icons": "5.0.0",
+    "react-redux": "^4.4.6",
+    "redux": "3.6.0",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "^2.3.0",
+    "rtl-detect": "^1.0.2"
+  },
+  "devDependencies": {
+    "babel-jest": "23.4.2",
+    "babel-preset-react-native": "5.0.2",
+    "jest": "23.4.2",
+    "react-devtools": "^3.2.3",
+    "react-test-renderer": "16.4.1"
+  },
+  "jest": {
+    "preset": "react-native",
+    "setupFiles": [
+      "<rootDir>/node_modules/appcenter/test/AppCenterMock.js",
+      "<rootDir>/node_modules/appcenter-analytics/test/AppCenterAnalyticsMock.js",
+      "<rootDir>/node_modules/appcenter-crashes/test/AppCenterCrashesMock.js"
+    ]
+  }
 }

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 
 import { t, i18n, responsiveHeight as rh, responsiveWidth as rw, responsiveFontSize as rf } from '../utils';
 import GlobalStyles from '../config/styles';
-import { splitNumber, currentLocale } from '../utils/i18n';
+//import { splitNumber, currentLocale } from '../utils/i18n';
 
 export default class CircularButton extends Component {
     constructor(props) {

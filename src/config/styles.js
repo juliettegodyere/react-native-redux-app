@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import { responsiveHeight as rh, responsiveWidth as rw, responsiveFontSize as rf } from '../utils/layout';
 
 const PRIMARY_FG_TEXT = '#222222';
-const PRIMARY_FG_EMPH = '#0061FE';
+const PRIMARY_FG_EMPH = '#C44569';
 const PRIMARY_BG      = '#FFFFFF';
 
 const SECONDARY_FG_TEXT = '#222222';
@@ -132,6 +132,10 @@ const GlobalStyles = {
     subtext: { 
         color: '#aaa',
         fontFamily: 'AvenirNext-Medium'
+     },
+     arrowBack:{
+        color: Platform.OS == 'android' ? PRIMARY_BG : PRIMARY_FG_EMPH,
+
      },
     footnote: {
         color: '#aaa',

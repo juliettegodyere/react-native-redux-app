@@ -16,7 +16,7 @@ import FooterTabView from './components/footer-tab';
 
 const { store, persistor } = StoreUtils.createStore(Config.redux);
 
-applyTranslations(Config.i18n.translations);
+//applyTranslations(Config.i18n.translations);
 
 export default class App extends Component {
     constructor(props) {
@@ -51,7 +51,8 @@ export default class App extends Component {
     }
 
     renderTabbedScenes(scene, key) {
-        return <Scene tabs key={key} hideTabBar={false} tabBarComponent={FooterTabView} tabBarPosition="bottom">
+        //console.log(JSON.stringify(this.state + "Just curious"));
+        return <Scene tabs key={key} hideTabBar={false} tabBarComponent={FooterTabView} tabBarPosition="bottom" onTabOnPress = {() => alert(key)}>
             {scene.map(subScene => subScene.render(this.state))}
         </Scene>
     }

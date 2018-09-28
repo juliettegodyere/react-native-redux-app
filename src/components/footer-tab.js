@@ -12,11 +12,17 @@ export default class FooterTabView extends Component {
         super(props);
         autoBind(this);
         this.state = {
-            activeTab: 'Credits'
+            activeTab: 'Feeds'
         };
     }
 
+    getOnPress(name){
+        this.setState({
+            activeTab:this.props.name
+        })
+    }
     renderFooterItem(item, index) {
+        //console.log(item + "" +index + " ");
         let isActive = item.title == this.state.activeTab;
         let hasBadge = item.notifications > 0;
         if (hasBadge) {
@@ -37,10 +43,10 @@ export default class FooterTabView extends Component {
 
     render() {
         let items = [
-            {title: 'Credits', icon:'ios-cash', notifications: 0},
-            {title: 'Topup', icon:'ios-add-circle', notifications: 0},
-            {title: 'Receipts', icon:'ios-filing', notifications: 10},
-            {title: 'Settings', icon:'ios-settings', notifications: 0}
+            {title: 'Feeds', icon:'ios-home', notifications: 0},
+            {title: 'Search', icon:'ios-add-circle', notifications: 0},
+            {title: 'Chats', icon:'ios-add-outline', notifications: 10},
+            {title: 'Profile', icon:'ios-person', notifications: 0}
         ]
         return <Footer style={Styles.footer}>
             <FooterTab style={{backgroundColor: Styles.footer.backgroundColor}}>

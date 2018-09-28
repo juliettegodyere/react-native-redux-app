@@ -1,43 +1,45 @@
 import thunk from 'redux-thunk';
 import _ from 'lodash';
 
-import AppScene from '../scenes';
-import OnboardingScene from '../features/onboarding/scenes';
-import CreditScene from '../features/credits/scenes';
-import TopupScene from '../features/topup/scenes/index';
-import ActivityScene from '../features/activity/scenes/index';
-import SettingsScene from '../features/settings/scenes/index';
-import AuthPinScene from '../features/auth-pin/scenes/index';
-
+//import AppScene from '../scenes';
+import TimelineScene from '../features/timelines/scenes';
+import UserScene from '../features/users/scenes';
+import GroupsScene from '../features/groups/scenes';
+import EventsScene from '../features/events/scenes';
+import DiscoverScene from '../features/discover/scenes';
+import EventsMainScene from '../features/eventsMain/scenes';
+import SortMainScene from '../features/sortContent/scenes';
+import OnBoardingScene from '../features/onBoarding/scenes';
 
 const Config = {
     redux: {
         state_key: '@Micropay:state',
         middlewares: [thunk],
         reducers: {
-            ...AppScene.reducer,
-            ...OnboardingScene.reducer,
-            ...CreditScene.reducer,
-            ...ActivityScene.reducer,
-            ...SettingsScene.reducer,
-            ...AuthPinScene.reducer
+            //...AppScene.reducer,
+            ...OnBoardingScene.reducer,
+            ...TimelineScene.reducer,
+            ...UserScene.reducer,
+           ...GroupsScene.reducer,
+            ...EventsScene.reducer,
+            ...DiscoverScene.reducer,
+            ...EventsMainScene.reducer,
+            ...SortMainScene.reducer
         }
     },
-    i18n: {
-        translations: _.merge({},
-            AppScene.i18n.translations,
-            OnboardingScene.i18n.translations,
-            CreditScene.i18n.translations,
-            ActivityScene.i18n.translations,
-            SettingsScene.i18n.translations,
-            AuthPinScene.i18n.translations
-        )
-    },
+  
     scenes: [
-        AuthPinScene,
-        [CreditScene, TopupScene, ActivityScene, SettingsScene],
-        OnboardingScene,
-        AppScene,
+        //OnBoardingScene,
+        //SortMainScene,
+       //EventsMainScene,
+       //DiscoverScene,
+        //EventsScene,
+        GroupsScene,
+        //UserScene,
+        [TimelineScene,DiscoverScene],
+        //AppScene,
+        //DiscoverScene,
+        TimelineScene
     ]
 }
 export default Config;

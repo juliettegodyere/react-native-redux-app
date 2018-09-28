@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)https://www.hackerrank.com/challenges/30-binary-trees/problem -->
+<html lang="en-us" class="gr__hackerrank_com" style="--font-family-text:OpenSans, Arial, Helvetica, sans-serif; --font-family-input:SourceCodePro, monaco, Courier, monospace;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  
+  
+        
+        <meta property="og:image" id="meta-og-image" content="https://hrcdn.net/og/default.jpg"><meta property="og:site_name" id="meta-og-site" content="HackerRank"><meta property="og:type" id="meta-og-type" content="website"><meta property="article:author" content="https://www.facebook.com/hackerrank"><meta name="twitter:card" id="meta-twitter-card" content="summary"><meta name="twitter:site" id="meta-twitter-site" content="@hackerrank"><meta property="fb:app_id" id="meta-fb-id" content="347499128655783"><meta content="authenticity_token" name="csrf-param" id="csrf-param"><meta content="LTkpjY5TFF/MeYw0GK4YpGwusbeyGNOqVDmoq1YiQzDsDaZgrCAYXDkC3wJgea1cf1zxfZtx227BypnUcJVeMA==" name="csrf-token" id="csrf-token">
+        
+        
+      
+  <script type="text/javascript" async="" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/mixpanel-2-latest.min.js"></script><script type="text/javascript" async="" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/ga.js"></script><script>/*!
+ * JavaScript Cookie v2.1.3
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+;(function (factory) {
+	var registeredInModuleLoader = false;
+	if (typeof define === 'function' && define.amd) {
+		define(factory);
+		registeredInModuleLoader = true;
+	}
+	if (typeof exports === 'object') {
+		module.exports = factory();
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
+		var OldCookies = window.Cookies;
+		var api = window.Cookies = factory();
+		api.noConflict = function () {
+			window.Cookies = OldCookies;
+			return api;
+		};
+	}
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
+
+	function init (converter) {
+		function api (key, value, attributes) {
+			var result;
+			if (typeof document === 'undefined') {
+				return;
+			}
+
+			// Write
+
+			if (arguments.length > 1) {
+				attributes = extend({
+					path: '/'
+				}, api.defaults, attributes);
+
+				if (typeof attributes.expires === 'number') {
+					var expires = new Date();
+					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+					attributes.expires = expires;
+				}
+
+				try {
+					result = JSON.stringify(value);
+					if (/^[\{\[]/.test(result)) {
+						value = result;
+					}
+				} catch (e) {}
+
+				if (!converter.write) {
+					value = encodeURIComponent(String(value))
+						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+				} else {
+					value = converter.write(value, key);
+				}
+
+				key = encodeURIComponent(String(key));
+				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+				key = key.replace(/[\(\)]/g, escape);
+
+				return (document.cookie = [
+					key, '=', value,
+					attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+					attributes.path ? '; path=' + attributes.path : '',
+					attributes.domain ? '; domain=' + attributes.domain : '',
+					attributes.secure ? '; secure' : ''
+				].join(''));
+			}
+
+			// Read
+
+			if (!key) {
+				result = {};
+			}
+
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling "get()"
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var rdecode = /(%[0-9A-Z]{2})+/g;
+			var i = 0;
+
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var cookie = parts.slice(1).join('=');
+
+				if (cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
+
+				try {
+					var name = parts[0].replace(rdecode, decodeURIComponent);
+					cookie = converter.read ?
+						converter.read(cookie, name) : converter(cookie, name) ||
+						cookie.replace(rdecode, decodeURIComponent);
+
+					if (this.json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
+					}
+
+					if (key === name) {
+						result = cookie;
+						break;
+					}
+
+					if (!key) {
+						result[name] = cookie;
+					}
+				} catch (e) {}
+			}
+
+			return result;
+		}
+
+		api.set = api;
+		api.get = function (key) {
+			return api.call(api, key);
+		};
+		api.getJSON = function () {
+			return api.apply({
+				json: true
+			}, [].slice.call(arguments));
+		};
+		api.defaults = {};
+
+		api.remove = function (key, attributes) {
+			api(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
+</script>
+  <style>
+  .cdn-error-view {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: white;
+    z-index: 9999;
+    font-family: "Whitney SSm A", "Whitney SSm B", "Avenir", "Segoe UI", "Ubuntu", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .cdn-error-view .error-box-wrap {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .cdn-error-view .error-icon {
+    text-align: center;
+  }
+  .cdn-error-view .error-title {
+    font-size: 48px;
+    margin-top: 30px;
+    margin-bottom: 0;
+    font-weight: bold;
+  }
+  .cdn-error-view .error-message {
+    margin-top: 20px;
+    margin-bottom: 0;
+  }
+  .cdn-error-view .btn-wrap {
+    margin-top: 20px;
+  }
+  .cdn-error-view .btn-reload {
+    width: 300px;
+    padding: 10px;
+    border-radius: 3px;
+    border-color: #088837;
+    border-bottom-color: #007827;
+    border-width: 1px;
+    border-style: solid;
+    color : #FFF;
+    background-color: #2ec866;
+    background-image: -webkit-gradient(linear, top left, bottom left, color-stop(0, #2ec866), color-stop(1, #29b35b));
+    background-image: -webkit-linear-gradient(top, #2ec866, #29b35b);
+    background-image: linear-gradient(top, #2ec866, #29b35b);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2), inset 0 1px 1px rgba(255, 255, 255, 0.1), inset 0 -1px 4px rgba(32, 138, 70, 0.3);
+    outline: none;
+  }
+</style>
+
+
+<script>
+  var cdnLoaded = false;
+
+  var checkForWorkingCDN = (function() {
+    //this two value should come from configuration
+    var cdns = ["hrcdn.net","d3keuzeb2crhkn.cloudfront.net"];
+    var cdnUrl = Cookies.get('cdn_url') || cdns[0];
+    var filePath = "https://hrcdn.net/hackerrank/assets/cdnping-e4dfec54a83d6e6bc9baf3ce741ae25e.js";
+
+    //extract pathname from url
+    var urlRegex = /^[^#]*?:\/\/.*?(\/.*)$/ ;
+    var match = filePath.match(urlRegex);
+    if(match) filePath = match[1];
+
+    //add current cdn on first of array
+    cdns.splice(cdns.indexOf(cdnUrl), 1);
+    cdns.unshift(cdnUrl);
+
+    var cdnIndx = 0;
+
+    function tryCurrentCDN() {
+      if (cdnUrl) document.write('<script src="https://' + cdnUrl + filePath + '?' + Date.now() + '"><\/script>');
+      document.write('<script>checkForWorkingCDN();<\/script>');
+    }
+
+    //try the current cdn
+    tryCurrentCDN();
+
+    return function() {
+      if (cdnUrl && cdnLoaded) {
+        Cookies.set('cdn_url', cdnUrl, {expires: 3});
+        Cookies.set('cdn_set', 'true', {expires: 3});
+        if (cdnIndx !== 0) {
+          document.location.reload();
+        }
+
+        //if cdnUrl not loaded check the next cdn;
+      } else if (cdnUrl) {
+        //track all the failed cdn
+        var failedCdns = Cookies.get('failed_cdn_hosts');
+        if (failedCdns) {
+          failedCdns = JSON.parse(failedCdns);
+        } else {
+          failedCdns = [];
+        }
+
+        failedCdns.push(cdnUrl);
+        var fifteenMinuteFromNow = new Date();
+        fifteenMinuteFromNow.setMinutes(15);
+        Cookies.set('failed_cdn_hosts', JSON.stringify(failedCdns), {expires: fifteenMinuteFromNow});
+        Cookies.set("cdn_url_switched", "true", {expires: fifteenMinuteFromNow});
+
+        //try next cdn
+        cdnIndx += 1;
+        cdnUrl = cdns[cdnIndx];
+        tryCurrentCDN();
+
+        //if no cdn left to check and none of loaded return err
+      } else {
+        Cookies.remove('cdn_url');
+        return 'cdnerror';
+      }
+    }
+  }());
+</script><script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/cdnping-e4dfec54a83d6e6bc9baf3ce741ae25e.js"></script><script>checkForWorkingCDN();</script>
+
+<script>
+  //track cdn related matrices
+  (function() {
+    var allCdns = ["hrcdn.net","d3keuzeb2crhkn.cloudfront.net"];
+
+    var metrics = [];
+    var defaultCdn = Cookies.get('default_cdn_url');
+
+    //method to track the events
+    function appTrack(key, attrs) {
+      attrs = attrs || {};
+      attrs.uid = Cookies.get('hackerrank_mixpanel_token')
+      metrics.push({
+        'key': key,
+        'meta_data': attrs
+      });
+    }
+
+    function sendMetrices() {
+      if (!XMLHttpRequest) return;
+      var xhr = new XMLHttpRequest();
+      var metrics_endpoint = 'https://metrics.hackerrank.com/app_metrics'; // Todo : this need to move on configuration
+
+      if (!xhr) return;
+
+      xhr.open("POST", metrics_endpoint, true);
+
+      //set xhr headers and options
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.withCredentials = true;
+
+      xhr.send(JSON.stringify({
+        data: metrics,
+        default_cdn_url: defaultCdn,
+        document_referrer: document.referrer
+      }));
+    }
+
+    var cdnUrl = Cookies.get('cdn_url');
+    var failedCdns = Cookies.get('failed_cdn_hosts');
+
+    var cdnMetrices = {};
+
+    //track used cdn host
+    if (cdnUrl) {
+      cdnMetrices['used-cdn'] = cdnUrl;
+      cdnMetrices['cdn-index'] = allCdns.indexOf(cdnUrl) + 1;
+      cdnMetrices['all-failed'] = false;
+    //track if all cdn failed (If cdnUrl is not set it means all cdn url failed)
+    } else {
+      cdnMetrices['used-cdn'] = '';
+      cdnMetrices['cdn-index'] = 999;
+      cdnMetrices['all-failed'] = true;
+    }
+
+    appTrack('cdn-metrices', cdnMetrices);
+
+    //track failed cdn
+    if (failedCdns) {
+      failedCdns = JSON.parse(failedCdns);
+      Cookies.remove('failed_cdn_hosts');
+      failedCdns.forEach(function(cdn) {
+        appTrack('failed-cdn-host', {
+          cdn: cdn
+        });
+      });
+    }
+
+    //send metrics
+    sendMetrices();
+
+  }());
+</script>
+
+
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/png" href="https://hrcdn.net/hackerrank/assets/favicon-95dc36c7e91ed5f1841649303c027edb.png">
+
+  <!-- Prefetch dns on production -->
+  
+    <link rel="dns-prefetch" href="https://hrcdn.net/">
+    <link rel="dns-prefetch" href="https://d3keuzeb2crhkn.cloudfront.net/">
+    <link rel="dns-prefetch" href="https://notifications.hackerrank.com/">
+    <link rel="dns-prefetch" href="https://api.mixpanel.com/">
+    <link rel="dns-prefetch" href="https://metrics.hackerrank.com/">
+    <link rel="preconnect" href="https://sentry.io/">
+    <link rel="dns-prefetch" href="https://sentry.io/">
+  
+
+  
+
+
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_libraries-21fce5f00a5704ab97ea6e29f618ca7f.css"><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank-core-34a38d5e53237acdb04bd3cfa307ab90.css"><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/dashboard-e26d916d8859b521a068330828d9578e.css">
+  
+
+  <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_app-87555ca29cfe72641a07.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community_hackerrank_r_work-23d55c606429571d12aa.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community-c541d5600091e9f67b6a.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_community-f344237b425f97ff9cc4.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_leaderboard_hackerrank_r_leaderboardv2-fe33b60cdf9a08a34d22.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_onboarding-ba118bc433f1e0b0370f.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge-3a96bddf0114b7509206.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_hackerrank_r_code_snippets_hackerrank_r_onboarding-cf25b84852ae8b03dc0f.css">
+  
+    <link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge-2bbb8c9b3cad945a552f.css">
+  
+
+  <!-- Prefetch / preload assets on production -->
+  
+
+    <!-- Prefetch old assets -->
+    
+      <link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank-29975682f302f0fbbdae252d97e4788d.js">
+    
+      <link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/base-4e953f9582ddc0e62ee5b02dbe2520ca.js">
+    
+      <link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_libraries-ee40391d20d8d00f36e1a0af1ee56beb.js">
+    
+    <!-- Prefetch old assets end-->
+
+    <!-- preload scripts required on the same page -->
+    <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_vendor-5bc167c024.js">
+    <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_app-87555ca29cfe72641a07.js">
+    <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/runtime-2481bf0384e2deb4c9c0.js">
+
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community_hackerrank_r_work-23d55c606429571d12aa.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community-c541d5600091e9f67b6a.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_community-f344237b425f97ff9cc4.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_hackerrank_r_code_snippets_hackerrank_r_onboarding-cf25b84852ae8b03dc0f.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_leaderboard_hackerrank_r_leaderboardv2-fe33b60cdf9a08a34d22.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_onboarding-ba118bc433f1e0b0370f.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge-3a96bddf0114b7509206.js">
+    
+      <link rel="preload" as="script" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge-2bbb8c9b3cad945a552f.js">
+    
+    <!-- preload scripts end -->
+
+    <!-- Prefetch old css files -->
+    <link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank-core-34a38d5e53237acdb04bd3cfa307ab90.css">
+    <link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_libraries-21fce5f00a5704ab97ea6e29f618ca7f.css">
+
+    
+      <link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/dashboard-e26d916d8859b521a068330828d9578e.css">
+    
+    <!-- Prefetch old css files end -->
+  
+  
+
+  <!-- Load promise polyfill for the non-believers -->
+  <script>
+    window.Promise || document.write('<script src="https://hrcdn.net/hackerrank/assets/promise-polyfill/promise.min-9b7934fab083223fac8be5ee5ae0b68d.js" type="text\/javascript"><\/script>');
+  </script>
+
+<script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community_hackerrank_r_work-23d55c606429571d12aa.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_community-c541d5600091e9f67b6a.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_community-f344237b425f97ff9cc4.js"></script><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list-12bb08b578ad7eaa2791.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2_hackerrank_r_interview_hackerrank_14aa502a-50a219c2b488c7a1f86a.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2-872d05cd86651791be2c.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2-872d05cd86651791be2c.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list-12bb08b578ad7eaa2791.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_challenge_list_v2-28fee2709d829d2e171f.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_challenge_list_v2-28fee2709d829d2e171f.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_forum-e893abb65203d9ebf7ca.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum_lsp_client-79f0f3a53b46ca261d83.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_code_snippets_hackerrank_r_forum-6f536c9fd9fe39e87206.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum-0986a56df648fb66b083.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum-0986a56df648fb66b083.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_code_snippets_hackerrank_r_forum-6f536c9fd9fe39e87206.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_forum-e893abb65203d9ebf7ca.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_leaderboard_hackerrank_r_leaderboardv2-fe33b60cdf9a08a34d22.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_onboarding-ba118bc433f1e0b0370f.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge-3a96bddf0114b7509206.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_hackerrank_r_code_snippets_hackerrank_r_onboarding-cf25b84852ae8b03dc0f.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge-2bbb8c9b3cad945a552f.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboardv2-5d34b2a9783f942c2778.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboard~hackerrank_r_leaderboardv2-c40d2af35c7e15a77829.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboard~hackerrank_r_leaderboardv2-c40d2af35c7e15a77829.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboardv2-5d34b2a9783f942c2778.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_contest-f57750c828bfcc7f1a9c.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_contest-f57750c828bfcc7f1a9c.css"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_dashboard-8774da54b47ab6ab8de7.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_dashboard_hackerrank_r_work-52cf8409ac0a40c533f5.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_dashboard-8774da54b47ab6ab8de7.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_rank-36b28494046df5faab2d.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_rank-36b28494046df5faab2d.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboard-8b576bc5d2ae0cc55b40.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_leaderboard-8b576bc5d2ae0cc55b40.css">
+        <style>
+          html.scroll-hidden,html.scroll-hidden body{
+              overflow: hidden;
+              height:100vh;
+          }
+          html.scroll-hidden.pad-adjustment body{
+              padding-right : 0px;
+          }
+          html.scroll-hidden.pad-adjustment .fixed-elm{
+              padding-right : 0px;
+          }
+        </style>
+    <script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_old_trimmed-c49b50b1ea7c9c0323a3.js"></script><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_company_header-f075161efb51c601d8bb.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_company_header-f075161efb51c601d8bb.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_jobs-7203ac4c1ee56b245cb1.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_jobs~hackerrank_r_testinvite~hackerrank_r_testsettings-affb163167eed3042aa0.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_jobs-ea9de208ae01f988c69a.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_jobs-ea9de208ae01f988c69a.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_jobs-7203ac4c1ee56b245cb1.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_profile-b119650cf664f4edd57f.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_profile-b119650cf664f4edd57f.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_calendar-8ce307bc8f4d1d0c2ba8.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_calendar-bfd144c52decb39e92af.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_calendar-8ce307bc8f4d1d0c2ba8.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_code_snippets-996f4c14d0f6bcc4c194.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_code_snippets-996f4c14d0f6bcc4c194.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_onboarding-f759ba4c3d3ee930e8d9.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_onboarding-f759ba4c3d3ee930e8d9.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_scoring-6ae497e6d749fd4a0625.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_scoring-6ae497e6d749fd4a0625.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_interview-662750aa627d516be496.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_interview~hackerrank_r_work-459f2aed8146e35e2862.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_interview~hackerrank_r_testinsights-1955c016ea87556139ff.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_interview-d0a322f9153701e072bf.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_interview~hackerrank_r_work-459f2aed8146e35e2862.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_interview-d0a322f9153701e072bf.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_interview-662750aa627d516be496.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_leaderboard_hackerrank_r_leaderboardv2-fe33b60cdf9a08a34d22.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_hackerrank_r_onboarding-ba118bc433f1e0b0370f.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge-3a96bddf0114b7509206.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_hackerrank_r_code_snippets_hackerrank_r_onboarding-cf25b84852ae8b03dc0f.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge-2bbb8c9b3cad945a552f.js"></script><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_codeshell_lib-f202de816526e536411a.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_codeshell_lib_hackerrank_r_teams-989af7c6a1b9bc72bbf9.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_codeshell_lib-575d563e37ae32aea08c.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/codeshell_editor_theme_m-0e30dc449d93a75c6b9e.js"><link rel="prefetch" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/codeshell_editor_theme_m-0e30dc449d93a75c6b9e.css"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/hackerrank_r_krackjack-ee9e55cc1ce2865f32d9.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_krackjack-235f474a58e1ce92c813.js"><link rel="prefetch" href="https://hrcdn.net/hackerrank/assets/vendors~hackerrank_r_krackjack-235f474a58e1ce92c813.css"><style id="react-tooltip">.__react_component_tooltip{border-radius:3px;display:inline-block;font-size:13px;left:-999em;opacity:0;padding:8px 21px;position:fixed;pointer-events:none;transition:opacity 0.3s ease-out;top:-999em;visibility:hidden;z-index:999}.__react_component_tooltip:before,.__react_component_tooltip:after{content:"";width:0;height:0;position:absolute}.__react_component_tooltip.show{opacity:0.9;margin-top:0px;margin-left:0px;visibility:visible}.__react_component_tooltip.type-dark{color:#fff;background-color:#222}.__react_component_tooltip.type-dark.place-top:after{border-top-color:#222;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-dark.place-bottom:after{border-bottom-color:#222;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-dark.place-left:after{border-left-color:#222;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-dark.place-right:after{border-right-color:#222;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-dark.border{border:1px solid #fff}.__react_component_tooltip.type-dark.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-dark.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-dark.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-dark.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-success{color:#fff;background-color:#8DC572}.__react_component_tooltip.type-success.place-top:after{border-top-color:#8DC572;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-success.place-bottom:after{border-bottom-color:#8DC572;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-success.place-left:after{border-left-color:#8DC572;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-success.place-right:after{border-right-color:#8DC572;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-success.border{border:1px solid #fff}.__react_component_tooltip.type-success.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-success.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-success.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-success.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-warning{color:#fff;background-color:#F0AD4E}.__react_component_tooltip.type-warning.place-top:after{border-top-color:#F0AD4E;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-warning.place-bottom:after{border-bottom-color:#F0AD4E;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-warning.place-left:after{border-left-color:#F0AD4E;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-warning.place-right:after{border-right-color:#F0AD4E;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-warning.border{border:1px solid #fff}.__react_component_tooltip.type-warning.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-warning.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-warning.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-warning.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-error{color:#fff;background-color:#BE6464}.__react_component_tooltip.type-error.place-top:after{border-top-color:#BE6464;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-error.place-bottom:after{border-bottom-color:#BE6464;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-error.place-left:after{border-left-color:#BE6464;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-error.place-right:after{border-right-color:#BE6464;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-error.border{border:1px solid #fff}.__react_component_tooltip.type-error.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-error.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-error.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-error.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-info{color:#fff;background-color:#337AB7}.__react_component_tooltip.type-info.place-top:after{border-top-color:#337AB7;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-info.place-bottom:after{border-bottom-color:#337AB7;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-info.place-left:after{border-left-color:#337AB7;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-info.place-right:after{border-right-color:#337AB7;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-info.border{border:1px solid #fff}.__react_component_tooltip.type-info.border.place-top:before{border-top:8px solid #fff}.__react_component_tooltip.type-info.border.place-bottom:before{border-bottom:8px solid #fff}.__react_component_tooltip.type-info.border.place-left:before{border-left:8px solid #fff}.__react_component_tooltip.type-info.border.place-right:before{border-right:8px solid #fff}.__react_component_tooltip.type-light{color:#222;background-color:#fff}.__react_component_tooltip.type-light.place-top:after{border-top-color:#fff;border-top-style:solid;border-top-width:6px}.__react_component_tooltip.type-light.place-bottom:after{border-bottom-color:#fff;border-bottom-style:solid;border-bottom-width:6px}.__react_component_tooltip.type-light.place-left:after{border-left-color:#fff;border-left-style:solid;border-left-width:6px}.__react_component_tooltip.type-light.place-right:after{border-right-color:#fff;border-right-style:solid;border-right-width:6px}.__react_component_tooltip.type-light.border{border:1px solid #222}.__react_component_tooltip.type-light.border.place-top:before{border-top:8px solid #222}.__react_component_tooltip.type-light.border.place-bottom:before{border-bottom:8px solid #222}.__react_component_tooltip.type-light.border.place-left:before{border-left:8px solid #222}.__react_component_tooltip.type-light.border.place-right:before{border-right:8px solid #222}.__react_component_tooltip.place-top{margin-top:-10px}.__react_component_tooltip.place-top:before{border-left:10px solid transparent;border-right:10px solid transparent;bottom:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-top:after{border-left:8px solid transparent;border-right:8px solid transparent;bottom:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-bottom{margin-top:10px}.__react_component_tooltip.place-bottom:before{border-left:10px solid transparent;border-right:10px solid transparent;top:-8px;left:50%;margin-left:-10px}.__react_component_tooltip.place-bottom:after{border-left:8px solid transparent;border-right:8px solid transparent;top:-6px;left:50%;margin-left:-8px}.__react_component_tooltip.place-left{margin-left:-10px}.__react_component_tooltip.place-left:before{border-top:6px solid transparent;border-bottom:6px solid transparent;right:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-left:after{border-top:5px solid transparent;border-bottom:5px solid transparent;right:-6px;top:50%;margin-top:-4px}.__react_component_tooltip.place-right{margin-left:10px}.__react_component_tooltip.place-right:before{border-top:6px solid transparent;border-bottom:6px solid transparent;left:-8px;top:50%;margin-top:-5px}.__react_component_tooltip.place-right:after{border-top:5px solid transparent;border-bottom:5px solid transparent;left:-6px;top:50%;margin-top:-4px}.__react_component_tooltip .multi-line{display:block;padding:2px 0px;text-align:center}</style><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/codeshell_editor_theme_m-0e30dc449d93a75c6b9e.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/codeshell_editor_theme_m-0e30dc449d93a75c6b9e.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_codeshell_lib_hackerrank_r_teams-989af7c6a1b9bc72bbf9.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_codeshell_lib-575d563e37ae32aea08c.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_codeshell_lib-f202de816526e536411a.js"></script><script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/codemirror_basic-ea8e34ebc0b1a33b938bc18d9364a64c.js" async=""></script><script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/clike-730a8140c63a08831b4b7153287a6f04.js" async=""></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum_lsp_client-79f0f3a53b46ca261d83.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum-0986a56df648fb66b083.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_code_snippets_hackerrank_r_forum-0986a56df648fb66b083.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_code_snippets_hackerrank_r_forum-6f536c9fd9fe39e87206.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_code_snippets_hackerrank_r_forum-6f536c9fd9fe39e87206.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_forum-e893abb65203d9ebf7ca.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_forum-e893abb65203d9ebf7ca.js"></script><link rel="stylesheet" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/font-awesome.min.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_dashboard_hackerrank_r_work-52cf8409ac0a40c533f5.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_dashboard-8774da54b47ab6ab8de7.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_dashboard-8774da54b47ab6ab8de7.js"></script><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/vendors_hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2_hackerrank_r_interview_hackerrank_14aa502a-50a219c2b488c7a1f86a.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2-872d05cd86651791be2c.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list_hackerrank_r_challenge_list_v2-872d05cd86651791be2c.js"></script><link rel="stylesheet" type="text/css" href="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list-12bb08b578ad7eaa2791.css"><script charset="utf-8" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_challenge_list-12bb08b578ad7eaa2791.js"></script><title> Day 23: BST Level-Order Traversal | HackerRank </title><meta name="description" id="meta-description" content="Implement a breadth-first search!"><meta property="og:title" id="meta-og-title" content="Day 23: BST Level-Order Traversal | HackerRank"><meta property="og:description" id="meta-og-description" content="Implement a breadth-first search!"><meta property="og:url" id="meta-og-url" content="https://www.hackerrank.com/challenges/30-binary-trees/problem"><meta name="twitter:url" id="meta-twitter-url" content="https://www.hackerrank.com/challenges/30-binary-trees/problem"><meta name="twitter:title" id="meta-twitter-title" content="Day 23: BST Level-Order Traversal | HackerRank"></head>
+<body id="hr_v2" data-gr-c-s-loaded="true">
+  <div class="cdn-error-view" style="display:none;">
+  <div class="error-box-wrap">
+    <div class="error-icon">
+      <svg x="0px" y="0px" width="80px" height="80px" viewBox="0 0 367.011 367.01" style="enable-background:new 0 0 367.011 367.01;" xml:space="preserve">
+        <g>
+         <g>
+          <path d="M365.221,329.641L190.943,27.788c-1.542-2.674-4.395-4.318-7.479-4.318c-3.084,0-5.938,1.645-7.48,4.318L1.157,330.584    c-1.543,2.674-1.543,5.965,0,8.639c1.542,2.674,4.395,4.318,7.48,4.318h349.65c0.028,0,0.057,0,0.086,0    c4.77,0,8.638-3.863,8.638-8.639C367.011,332.92,366.342,331.1,365.221,329.641z M23.599,326.266L183.464,49.381l159.864,276.885    H23.599z"></path>
+          <path d="M174.826,136.801v123.893c0,4.773,3.867,8.638,8.638,8.638c4.77,0,8.637-3.863,8.637-8.638V136.801    c0-4.766-3.867-8.637-8.637-8.637C178.693,128.165,174.826,132.036,174.826,136.801z"></path>
+          <path d="M183.464,279.393c-5.922,0-10.725,4.8-10.725,10.722s4.803,10.729,10.725,10.729c5.921,0,10.725-4.809,10.725-10.729    C194.189,284.193,189.386,279.393,183.464,279.393z"></path>
+         </g>
+        </g>
+      </svg>
+    </div>
+    <h2 class="error-title">Something went wrong!</h2>
+    <p class="error-message">Some error occured while loading page for you. Please try again.</p>
+    <div class="btn-wrap">
+      <a href="https://www.hackerrank.com/challenges/30-binary-trees/problem#" onclick="window.location.reload(true);"><button class="btn-reload">Reload</button></a>
+    </div>
+  </div>
+</div>
+<script>
+  if(typeof cdnLoaded !== 'undefined' && cdnLoaded === false){
+    document.querySelector('.cdn-error-view').style.display = 'block';
+  }
+</script>
+
+  <div id="fb-root"></div>
+  
+
+  <!-- Just a placeholder div to start loading open sans and source code loader -->
+  <div class="font-open-sans-loader"></div>
+  <div class="font-source-code-loader"></div>
+  <!-- Just a placeholder div to start loading open sans and source code loader end -->
+
+  <div id="content" onclick="void(0);"><div class="body-wrap  community-page challenges-page problem-page show-cookie-banner"><div class="toast-message loading"><span class="toast-container containment"><i class="ui-icon-loading"></i><span class="toast-text">Loading...</span></span></div><div class="theme-m new-design logged-user"><div class="page-header-wrapper theme-m-section"><nav class="community-header"><div class="container"><div class="header-nav-links theme-m-section"><ul class="nav-links"><li class="nav-link-item logo-wrap"><a class="nav_link backbone logo_mark js_logo_mark logo-link" data-analytics="NavBarLogo" data-attr1="/dashboard" href="https://www.hackerrank.com/dashboard"><img id="feed-intro" class="logo-img-small" src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/h_mark_sm-9c05999c62674028552f4e813728e591.svg" alt=""></a></li><li class="nav-link-item"><a class="nav-link dashboard active" data-analytics="NavBarDomains" href="https://www.hackerrank.com/dashboard"><span>Practice</span></a></li><li class="nav-link-item"><a class="nav-link contests" data-analytics="NavBarContests" href="https://www.hackerrank.com/contests"><span>Compete</span></a></li><li class="nav-link-item"><a class="nav-link" data-analytics="NavBarJobs" href="https://www.hackerrank.com/jobs"><span>Jobs</span><i class="icon-circle js-jobs-notification navigation-highlight-icon hidden"></i></a></li><li class="nav-link-item"><a class="nav-link" data-analytics="NavBarLeaderboard" id="leaderboard-nav-link" href="https://www.hackerrank.com/leaderboard"><span>Leaderboard</span></a></li></ul></div><div class="nav-buttons theme-m-section"><ul class="pull-left psR"><li class="hide-in-private-contest search-input-container input-icon main-hr-search" id="search-span"><div class="search-form new-search"><div><div class="search-query asyn-autocomplete autocomplete"><div class="ac-input-wrap cf"><input autocomplete="off" class="ac-input " placeholder="Search" value=""></div></div><i class="ui-icon-search"></i></div></div></li></ul><ul class="pull-left nav-wrap mmL"><li class="hide-in-private-contest button-item"><div class="dropdown dropdown message-dropdown notify-dropdown theme-m-content"><a class="cursor dropdown-handle nav_link hr_nav_messages_link js-dropdown-toggle js-link" data-analytics="NavBarMessageIcon"><i class="dropdown-icon ui-icon-message"></i></a><div class="dropdown-menu large"><header class="psT psB text-center menu-header"><strong class="header-title">Messages</strong></header><div id="notify_messages" class="dropdown-body"><div class="hr_nav_messages_list"><div class="no-propagation text-center txt-navy empty-msg">You have no unread messages.</div></div></div><footer class="final text-center show-all"><a class="btn show-all-link" href="https://www.hackerrank.com/inbox" data-analytics="NavBarMessageShowAll">Show All</a></footer></div></div></li><li class="button-item"><div class="dropdown dropdown notification-dropdown notify-dropdown theme-m-content"><a class="cursor dropdown-handle nav_link hr_nav_notifications_link js-dropdown-toggle js-link" data-toggle="dropdown" data-analytics="NavBarNotificationsIcon"><i class="dropdown-icon ui-icon-notification"></i><span class="indicator number-indicator hr_notifications_count">5</span></a><div class="dropdown-menu large" id="notify_broadcasts"><header class="psA menu-header"><strong class="header-title">Notifications</strong><a class="hr_archive_all archive pull-right js-link" data-analytics="NavBarNotificationsArchiveAll"><i class="icon-folder-open"></i>Archive All</a></header><div class="clearfix dropdown-body"><div class="hr_nav_notifications_list"><ul><li class="notify_item dropdown-item cursor" data-id="67328228" data-category="contest-announcements" data-url="/challenges/30-binary-trees?utm_campaign=30_days_of_code_continuous&amp;utm_medium=email&amp;utm_source=daily_reminder"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Rooting for You! Day 23 Challenge of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-19T08:01:44.000Z" title="2018-09-19 08:01">23 hours ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67291855" data-category="contest-announcements" data-url="/challenges/30-binary-search-trees?utm_campaign=30_days_of_code_continuous&amp;utm_medium=email&amp;utm_source=daily_reminder"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Stumped on Binary Search Trees? Day 22 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-18T08:01:58.000Z" title="2018-09-18 08:01">2 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67254144" data-category="contest-announcements" data-url="/challenges/30-generics?utm_campaign=30_days_of_code_continuous&amp;utm_medium=email&amp;utm_source=daily_reminder"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Become a Generics Master! Day 21 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-17T08:01:51.000Z" title="2018-09-17 08:01">3 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67217730" data-category="contest-announcements" data-url="/challenges/30-sorting"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Keep Calm and Bubble On. Day 20 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-16T08:01:52.000Z" title="2018-09-16 08:01">4 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67177784" data-category="contest-announcements" data-url="/challenges/30-interfaces"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Interacting with Interfaces. Day 19 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-15T08:01:52.000Z" title="2018-09-15 08:01">5 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67140653" data-category="contest-announcements" data-url="/challenges/30-queues-stacks"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Get in Line with Queues &amp; Stacks. Day 18 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-14T08:01:54.000Z" title="2018-09-14 08:01">6 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67104984" data-category="contest-announcements" data-url="/challenges/30-more-exceptions"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Handle Exceptions Like a Boss. Day 17 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-13T08:01:50.000Z" title="2018-09-13 08:01">7 days ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67067742" data-category="contest-announcements" data-url="/challenges/30-exceptions-string-to-integer"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Be Exception-al. Day 16 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-12T08:01:48.000Z" title="2018-09-12 08:01">1 week ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="67030057" data-category="contest-announcements" data-url="/challenges/30-linked-list"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Come together for Linked Lists. Day 15 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-11T08:02:38.000Z" title="2018-09-11 08:02">1 week ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66993564" data-category="contest-announcements" data-url="/challenges/30-scope"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Broaden your Scope. Day 14 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-10T08:02:23.000Z" title="2018-09-10 08:02">1 week ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66944893" data-category="contest-announcements" data-url="/challenges/30-abstract-classes"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Let’s Get Abstract. Day 13 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-09T08:01:42.000Z" title="2018-09-09 08:01">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66906239" data-category="contest-announcements" data-url="/challenges/30-inheritance"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Outstanding Inheritance. Day 12 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-08T08:01:52.000Z" title="2018-09-08 08:01">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66867872" data-category="contest-announcements" data-url="/challenges/30-2d-arrays"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Immerse Yourself in 2D Arrays. Day 11 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-07T08:01:58.000Z" title="2018-09-07 08:01">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66831644" data-category="contest-announcements" data-url="/challenges/30-binary-numbers"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Enter the World of 1’s and 0’s. Day 10 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-06T08:01:53.000Z" title="2018-09-06 08:01">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66794389" data-category="contest-announcements" data-url="/challenges/30-recursion"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Break it Down with Recursion. Day 9 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-05T08:03:16.000Z" title="2018-09-05 08:03">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66756723" data-category="contest-announcements" data-url="/challenges/30-dictionaries-and-maps"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Phone a Friend. Day 8 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-04T08:02:42.000Z" title="2018-09-04 08:02">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66721460" data-category="contest-announcements" data-url="/challenges/30-arrays"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Array of Sunshine :) Day 7 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-03T08:01:49.000Z" title="2018-09-03 08:01">2 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66686759" data-category="contest-announcements" data-url="/challenges/30-review-loop"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Operators, Strings, and Loops, Oh My! Day 6 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-02T08:02:00.000Z" title="2018-09-02 08:02">3 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66651604" data-category="contest-announcements" data-url="/challenges/30-loops"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Are you in the Loop? Day 5 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-09-01T08:02:08.000Z" title="2018-09-01 08:02">3 weeks ago</time></small></div></div></li><li class="notify_item dropdown-item cursor" data-id="66611273" data-category="contest-announcements" data-url="/challenges/30-class-vs-instance"><div class="notification-icon"><img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/notifymarker-72a631c740640b69e5d277569c59b97e.png"></div><div class="notification-subject pmT"><div class="psA"><div>Classes vs Instance. Day 4 of 30 Days of Code.</div><small class="meta"><time class="time-text" datetime="2018-08-31T08:02:14.000Z" title="2018-08-31 08:02">3 weeks ago</time></small></div></div></li></ul></div></div><footer class="final show-all"><a class="btn show-all-link" href="https://www.hackerrank.com/notifications" data-analytics="NavBarNotificationsShowAll">Show All</a></footer></div></div></li><li class="button-item"><div class="dropdown dropdown dropdown-auth profile-menu cursor theme-m-content"><a class="backbone nav_link js-dropdown-toggle js-link toggle-wrap" data-analytics="NavBarProfileDropDown"><i class="ui-icon-user default-user-icon"></i><span class="mmR username text-ellipsis">juliettegodyere8</span><i class="ui-icon-chevron-down down-icon"></i></a><div class="dropdown-menu drop-list pull-right"><ul><li class="hide-in-private-contest profile-nav-item"><a class="navigation_hackos hackos-count" data-analytics="NavBarProfileDropDownHackos" href="https://www.hackerrank.com/juliettegodyere8/hackos">Hackos: <span class="navigation_hackos-count">248</span></a></li><li class="hide-in-private-contest profile-nav-item"><a rel="tooltip" data-placement="left" data-analytics="NavBarProfileDropDownProfile" href="https://www.hackerrank.com/juliettegodyere8">Profile<div class="ui-progress-bar progress-bar theme-default"><div class="progress-filler" style="width: 30%;"></div></div></a></li><li class="hide-in-private-contest profile-nav-item"><a href="https://www.hackerrank.com/settings/profile" data-analytics="NavBarProfileDropDownSettings">Settings</a></li><li class="hide-in-private-contest profile-nav-item"><a href="https://www.hackerrank.com/challenges/bookmarks" data-analytics="NavBarDropDownBookmarks">Bookmarks</a></li><li class="hide-in-private-contest profile-nav-item"><a href="https://www.hackerrank.com/network" data-analytics="NavBarProfileDropDownNetwork">Network</a></li><li class="hide-in-private-contest profile-nav-item"><a href="https://www.hackerrank.com/submissions" data-analytics="NavBarProfileDropDownSubmissions">Submissions</a></li><li class="hide-in-private-contest profile-nav-item"><a href="https://www.hackerrank.com/administration" data-analytics="NavBarProfileDropDownAdministration">Administration</a></li><li class="profile-nav-item"><a class="logout-button js-link" data-analytics="NavBarProfileDropDownLogout">Logout</a></li></ul></div></div></li></ul></div></div></nav></div><header class="community-header-breadcrumb"><div class="container"><div class="d-flex justify-content-between align-items-center content-header-wrapper"><div class="community-header-breadcrumb-items"><ol itemtype="http://schema.org/BreadcrumbList" class="community-breadcrumb text-content"><li itemprop="itemListElement" itemtype="http://schema.org/ListItem" class="breadcrumb-item"><a itemprop="item" class="breadcrumb-link" data-analytics="Breadcrumb" data-attr1="Practice" data-attr2="global" data-attr7="1" href="https://www.hackerrank.com/dashboard"><span itemprop="name" class="breadcrumb-item-text">Practice</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemtype="http://schema.org/ListItem" class="breadcrumb-item"><span class="ui-icon-chevron-right mmL mmR chevron-icon"></span><a itemprop="item" class="breadcrumb-link" data-analytics="Breadcrumb" data-attr1="Tutorials" data-attr2="global" data-attr7="1" href="https://www.hackerrank.com/domains/tutorials"><span itemprop="name" class="breadcrumb-item-text">Tutorials</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemtype="http://schema.org/ListItem" class="breadcrumb-item"><span class="ui-icon-chevron-right mmL mmR chevron-icon"></span><a itemprop="item" class="breadcrumb-link" data-analytics="Breadcrumb" data-attr1="30 Days of Code" data-attr2="global" data-attr7="1" href="https://www.hackerrank.com/domains/tutorials/30-days-of-code"><span itemprop="name" class="breadcrumb-item-text">30 Days of Code</span></a><meta itemprop="position" content="1"></li><li itemprop="itemListElement" itemtype="http://schema.org/ListItem" class="breadcrumb-item"><span class="ui-icon-chevron-right mmL mmR chevron-icon"></span><span itemprop="name" class="breadcrumb-item-text">Day 23: BST Level-Order Traversal</span><meta itemprop="position" content="1"></li></ol><div class="page-label-wrapper text-headline"><h1 class="page-label"><div class="challenge-page-label-wrapper align-items-center"><h1 class="ui-icon-label page-label">Day 23: BST Level-Order Traversal<i class="icon-bookmark ui-icon-star txt-grey"></i></h1></div></h1></div></div><div class="community-header-aside"><div class="challange-header-aside"><div class="track-badge-progress"><div class="badge-progress"><div class="remaining"><div class="point-left-wrap"><span class="point-left">7 more challenges</span> to get your gold badge!</div><div class="track-progress-bar"><div class="ui-progress-bar progress-bar theme-default"><div class="progress-filler" style="width: 13%;"></div></div></div><div class="score-info"><span class="current-points">Points: <span class="value">23/30</span></span><a class="scoring-link" data-analytics="BadgeLearnMoreLink" data-attr1="30-days-of-code" target="_blank" href="https://www.hackerrank.com/scoring"><i class="scoring-icon ui-icon-warning-hexagon"></i></a></div></div><div class="ui-badge level-silver"><div class="ui-badge-wrap"><svg viewBox="0 0 91.66667 100" class="hexagon"><g><defs><lineargradient id="badge-silver-gradient" x1="52.5" y1="2.5" x2="52.5" y2="102.5" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#cee3eb"></stop><stop offset="1" stop-color="#aec8c7"></stop></lineargradient></defs><path fill="url(#badge-silver-gradient)" d="M98.28277,47.36h0c-.18459-9.382-.87983-17.797-2.0917-19.8595-1.02214-1.742-6.1721-5.43476-12.6195-9.45853L66.3804,8.23311C59.94162,4.89541,54.4699,2.5,52.49778,2.5c-2.42987,0-10.17687,3.63131-18.49789,8.18049-6.30411,3.44623-12.9328,7.41557-17.83631,10.74623-3.85037,2.61278-6.63864,4.828-7.35893,6.07393-.73574,1.27216-1.28014,4.91124-1.63613,9.67794l-.00014-.00008c-.45195,6.03951-.599,13.88935-.43933,21.10033.20233,9.11082.89243,17.18541,2.07561,19.22049C11.66541,82.42328,46.78277,102.5,52.49778,102.5c2.374,0,9.82245-3.47115,17.92388-7.87722,6.4-3.48081,13.19866-7.5418,18.23618-10.9459l-.00046-.00026c3.93694-2.6605,6.80064-4.91944,7.53385-6.17728.72907-1.2482,1.27024-4.80557,1.62881-9.48065l-.00014-.00008C98.269,62.13222,98.42408,54.47227,98.28277,47.36Z" transform="translate(-6.66667 -2.5)"></path></g><image class="badge-icon" xlink:href="https://hrcdn.net/hackerrank/assets/badges/30-days-of-code-01adcda814a5ce13990a038928bf8992.svg" x="50%" y="22" height="27" width="27" transform="translate(-13.5, 0)"></image><text class="badge-title" x="50%" y="65.5" font-size="10">Days of Code</text><g class="star-section" transform="translate(-17, 0)"><svg x="50%" y="71" height="10"><svg class="badge-star" viewBox="0 0 6.54904 6.25825" width="7" x="0"><path class="star" d="M55.51425,77.01983l-1.89417-.275-.84833-1.7175a.299.299,0,0,0-.27167-.16917.3245.3245,0,0,0-.2725.16917l-.305.61833-.5425,1.09916-.51417.075-1.38.2a.30333.30333,0,0,0-.18583.10083.33411.33411,0,0,0-.045.06833.35631.35631,0,0,0-.02417.07667.34087.34087,0,0,0-.005.04083.3038.3038,0,0,0,.02417.13417.33341.33341,0,0,0,.06667.0975l1.37167,1.33667-.2875,1.67167-.03667.21417c-.00167.01-.00167.02-.0025.02917l-.00167.0175a.26453.26453,0,0,0,.00167.04417.30489.30489,0,0,0,.44417.22917l1.69417-.89,1.69416.89a.30352.30352,0,0,0,.44084-.32L54.31175,78.874l1.37083-1.33667a.30339.30339,0,0,0-.16833-.5175" transform="translate(-49.22548 -74.85817)"></path></svg><svg class="badge-star" viewBox="0 0 6.54904 6.25825" width="7" x="9"><path class="star" d="M55.51425,77.01983l-1.89417-.275-.84833-1.7175a.299.299,0,0,0-.27167-.16917.3245.3245,0,0,0-.2725.16917l-.305.61833-.5425,1.09916-.51417.075-1.38.2a.30333.30333,0,0,0-.18583.10083.33411.33411,0,0,0-.045.06833.35631.35631,0,0,0-.02417.07667.34087.34087,0,0,0-.005.04083.3038.3038,0,0,0,.02417.13417.33341.33341,0,0,0,.06667.0975l1.37167,1.33667-.2875,1.67167-.03667.21417c-.00167.01-.00167.02-.0025.02917l-.00167.0175a.26453.26453,0,0,0,.00167.04417.30489.30489,0,0,0,.44417.22917l1.69417-.89,1.69416.89a.30352.30352,0,0,0,.44084-.32L54.31175,78.874l1.37083-1.33667a.30339.30339,0,0,0-.16833-.5175" transform="translate(-49.22548 -74.85817)"></path></svg><svg class="badge-star" viewBox="0 0 6.54904 6.25825" width="7" x="18"><path class="star" d="M55.51425,77.01983l-1.89417-.275-.84833-1.7175a.299.299,0,0,0-.27167-.16917.3245.3245,0,0,0-.2725.16917l-.305.61833-.5425,1.09916-.51417.075-1.38.2a.30333.30333,0,0,0-.18583.10083.33411.33411,0,0,0-.045.06833.35631.35631,0,0,0-.02417.07667.34087.34087,0,0,0-.005.04083.3038.3038,0,0,0,.02417.13417.33341.33341,0,0,0,.06667.0975l1.37167,1.33667-.2875,1.67167-.03667.21417c-.00167.01-.00167.02-.0025.02917l-.00167.0175a.26453.26453,0,0,0,.00167.04417.30489.30489,0,0,0,.44417.22917l1.69417-.89,1.69416.89a.30352.30352,0,0,0,.44084-.32L54.31175,78.874l1.37083-1.33667a.30339.30339,0,0,0-.16833-.5175" transform="translate(-49.22548 -74.85817)"></path></svg><svg class="badge-star" viewBox="0 0 6.54904 6.25825" width="7" x="27"><path class="star" d="M55.51425,77.01983l-1.89417-.275-.84833-1.7175a.299.299,0,0,0-.27167-.16917.3245.3245,0,0,0-.2725.16917l-.305.61833-.5425,1.09916-.51417.075-1.38.2a.30333.30333,0,0,0-.18583.10083.33411.33411,0,0,0-.045.06833.35631.35631,0,0,0-.02417.07667.34087.34087,0,0,0-.005.04083.3038.3038,0,0,0,.02417.13417.33341.33341,0,0,0,.06667.0975l1.37167,1.33667-.2875,1.67167-.03667.21417c-.00167.01-.00167.02-.0025.02917l-.00167.0175a.26453.26453,0,0,0,.00167.04417.30489.30489,0,0,0,.44417.22917l1.69417-.89,1.69416.89a.30352.30352,0,0,0,.44084-.32L54.31175,78.874l1.37083-1.33667a.30339.30339,0,0,0-.16833-.5175" transform="translate(-49.22548 -74.85817)"></path></svg></svg></g></svg></div></div></div></div></div></div></div></div></header><div class="container"></div><div class="community-content"><div class="challenge-view theme-m"><div class="challenge-page-header container"><div class="ui-tabs-wrap"><div class="render-list clearfix"><ul class="tab-header"><li id="Problem" class="tab-item active"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/problem" data-attr2="Problem" href="https://www.hackerrank.com/challenges/30-binary-trees/problem"><span class="ui-icon-label">Problem</span></a></li><li id="Submissions" class="tab-item"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/submissions" data-attr2="Submissions" href="https://www.hackerrank.com/challenges/30-binary-trees/submissions"><span class="ui-icon-label">Submissions</span></a></li><li id="Leaderboard" class="tab-item"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/leaderboard" data-attr2="Leaderboard" href="https://www.hackerrank.com/challenges/30-binary-trees/leaderboard"><span class="ui-icon-label">Leaderboard</span></a></li><li id="Discussions" class="tab-item"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/forum" data-attr2="Discussions" href="https://www.hackerrank.com/challenges/30-binary-trees/forum"><span class="ui-icon-label">Discussions</span></a></li><li id="Editorial" class="tab-item"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/editorial" data-attr2="Editorial" href="https://www.hackerrank.com/challenges/30-binary-trees/editorial"><span class="ui-icon-label">Editorial</span><i class="ui-icon-lock"></i></a></li><li id="Tutorial" class="tab-item"><a class="tab-item-color" data-analytics="ChallengeViewTab" data-attr1="/challenges/30-binary-trees/tutorial" data-attr2="Tutorial" href="https://www.hackerrank.com/challenges/30-binary-trees/tutorial"><span class="ui-icon-label">Tutorial</span></a></li></ul></div></div></div><section class="challenge-interface challenge-problem"><div class="challenge-body"><div class="challenge-body-elements-problem challenge-container-element"><div class="container challenge-page-wrap panes-container theme-m-content"><div class="full-screen-split split-wrap left-pane"><section class="problem-statement split"><div class="tab-list-content"><div class="theme-m hr_tour-problem-statement problem-statement have-external-links"><div class="content-text challenge-text mlB hackdown-container theme-m"><div class="challenge-body-html"><div class="challenge_problem_statement"><div class="msB challenge_problem_statement_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><p><strong>Objective</strong> <br>
+Today, we're going further with Binary Search Trees. Check out the <a href="https://www.hackerrank.com/challenges/30-binary-trees/tutorial">Tutorial</a> tab for learning materials and an instructional video!  </p>
+
+<p><strong>Task</strong> <br>
+A level-order traversal, also known as a breadth-first search, visits each level of a tree's nodes from left to right, top to bottom. You are given a pointer, <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-1-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.143ex" height="2.009ex" style="vertical-align: -0.338ex;" viewBox="0 -719.6 1784 865.1" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M21 287Q22 290 23 295T28 317T38 348T53 381T73 411T99 433T132 442Q161 442 183 430T214 408T225 388Q227 382 228 382T236 389Q284 441 347 441H350Q398 441 422 400Q430 381 430 363Q430 333 417 315T391 292T366 288Q346 288 334 299T322 328Q322 376 378 392Q356 405 342 405Q286 405 239 331Q229 315 224 298T190 165Q156 25 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 114 189T154 366Q154 405 128 405Q107 405 92 377T68 316T57 280Q55 278 41 278H27Q21 284 21 287Z"></path><g transform="translate(451,0)"><path stroke-width="1" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g transform="translate(937,0)"><path stroke-width="1" d="M201 -11Q126 -11 80 38T34 156Q34 221 64 279T146 380Q222 441 301 441Q333 441 341 440Q354 437 367 433T402 417T438 387T464 338T476 268Q476 161 390 75T201 -11ZM121 120Q121 70 147 48T206 26Q250 26 289 58T351 142Q360 163 374 216T388 308Q388 352 370 375Q346 405 306 405Q243 405 195 347Q158 303 140 230T121 120Z"></path></g><g transform="translate(1422,0)"><path stroke-width="1" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g></g></svg></span>, pointing to the root of a binary search tree. Complete the <em>levelOrder</em> function provided in your editor so that it prints the level-order traversal of the binary search tree.</p>
+
+<p><strong>Hint:</strong> You'll find a queue helpful in completing this challenge.</p></div></div></div><div class="challenge_input_format"><div class="msB challenge_input_format_title"><p><strong>Input Format</strong></p></div><div class="msB challenge_input_format_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><p>The locked stub code in your editor reads the following inputs and assembles them into a BST: <br>
+The first line contains an integer, <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-1-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.636ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 704.5 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g></svg></span> (the number of test cases). <br>
+The <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-2-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="1.636ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 704.5 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M40 437Q21 437 21 445Q21 450 37 501T71 602L88 651Q93 669 101 677H569H659Q691 677 697 676T704 667Q704 661 687 553T668 444Q668 437 649 437Q640 437 637 437T631 442L629 445Q629 451 635 490T641 551Q641 586 628 604T573 629Q568 630 515 631Q469 631 457 630T439 622Q438 621 368 343T298 60Q298 48 386 46Q418 46 427 45T436 36Q436 31 433 22Q429 4 424 1L422 0Q419 0 415 0Q410 0 363 1T228 2Q99 2 64 0H49Q43 6 43 9T45 27Q49 40 55 46H83H94Q174 46 189 55Q190 56 191 56Q196 59 201 76T241 233Q258 301 269 344Q339 619 339 625Q339 630 310 630H279Q212 630 191 624Q146 614 121 583T67 467Q60 445 57 441T43 437H40Z"></path></g></svg></span> subsequent lines each contain an integer, <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-3-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.515ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1944 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><g transform="translate(523,0)"><path stroke-width="1" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g transform="translate(1053,0)"><path stroke-width="1" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g transform="translate(1414,0)"><path stroke-width="1" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g></g></svg></span>, denoting the value of an element that must be added to the BST.</p></div></div></div><div class="challenge_output_format"><div class="msB challenge_output_format_title"><p><strong>Output Format</strong></p></div><div class="msB challenge_output_format_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><p>Print the <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-1-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="4.515ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 1944 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M366 683Q367 683 438 688T511 694Q523 694 523 686Q523 679 450 384T375 83T374 68Q374 26 402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487H491Q506 153 506 145Q506 140 503 129Q490 79 473 48T445 8T417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157Q33 205 53 255T101 341Q148 398 195 420T280 442Q336 442 364 400Q369 394 369 396Q370 400 396 505T424 616Q424 629 417 632T378 637H357Q351 643 351 645T353 664Q358 683 366 683ZM352 326Q329 405 277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q233 26 290 98L298 109L352 326Z"></path><g transform="translate(523,0)"><path stroke-width="1" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g><g transform="translate(1053,0)"><path stroke-width="1" d="M26 385Q19 392 19 395Q19 399 22 411T27 425Q29 430 36 430T87 431H140L159 511Q162 522 166 540T173 566T179 586T187 603T197 615T211 624T229 626Q247 625 254 615T261 596Q261 589 252 549T232 470L222 433Q222 431 272 431H323Q330 424 330 420Q330 398 317 385H210L174 240Q135 80 135 68Q135 26 162 26Q197 26 230 60T283 144Q285 150 288 151T303 153H307Q322 153 322 145Q322 142 319 133Q314 117 301 95T267 48T216 6T155 -11Q125 -11 98 4T59 56Q57 64 57 83V101L92 241Q127 382 128 383Q128 385 77 385H26Z"></path></g><g transform="translate(1414,0)"><path stroke-width="1" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path></g></g></svg></span> value of each node in the tree's level-order traversal as a single line of <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-2-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="2.064ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 888.5 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g></svg></span> space-separated integers.</p></div></div></div><div class="challenge_sample_input"><div class="msB challenge_sample_input_title"><p><strong>Sample Input</strong></p></div><div class="msB challenge_sample_input_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><pre><code>6
+3
+5
+4
+7
+2
+1
+</code></pre></div></div></div><div class="challenge_sample_output"><div class="msB challenge_sample_output_title"><p><strong>Sample Output</strong></p></div><div class="msB challenge_sample_output_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><pre><code>3 2 5 1 4 7 
+</code></pre></div></div></div><div class="challenge_explanation"><div class="msB challenge_explanation_title"><p><strong>Explanation</strong></p></div><div class="msB challenge_explanation_body"><div class="hackdown-content"><style id="MathJax_SVG_styles">.MathJax_SVG_Display {text-align: center; margin: 1em 0em; position: relative; display: block!important; text-indent: 0; max-width: none; max-height: none; min-width: 0; min-height: 0; width: 100%}
+.MathJax_SVG .MJX-monospace {font-family: monospace}
+.MathJax_SVG .MJX-sans-serif {font-family: sans-serif}
+.MathJax_SVG {display: inline; font-style: normal; font-weight: normal; line-height: normal; font-size: 100%; font-size-adjust: none; text-indent: 0; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0; min-height: 0; border: 0; padding: 0; margin: 0}
+.MathJax_SVG * {transition: none; -webkit-transition: none; -moz-transition: none; -ms-transition: none; -o-transition: none}
+.mjx-svg-href {fill: blue; stroke: blue}
+</style><svg style="display: none;"><defs id="MathJax_SVG_glyphs"></defs></svg><p>The input forms the following binary search tree: <br>
+<img src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/1461696188-8eddd12300-BST.png" title="BST.png"></p>
+
+<p>We traverse each level of the tree from the root downward, and we process the nodes at each level from left to right. The resulting level-order traversal is <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG" id="MathJax-Element-1-Frame"><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="25.045ex" height="2.176ex" style="vertical-align: -0.338ex;" viewBox="0 -791.3 10783.3 936.9" role="img" focusable="false"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)"><path stroke-width="1" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><g transform="translate(778,0)"><path stroke-width="1" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g transform="translate(2056,0)"><path stroke-width="1" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g transform="translate(2834,0)"><path stroke-width="1" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g transform="translate(4113,0)"><path stroke-width="1" d="M164 157Q164 133 148 117T109 101H102Q148 22 224 22Q294 22 326 82Q345 115 345 210Q345 313 318 349Q292 382 260 382H254Q176 382 136 314Q132 307 129 306T114 304Q97 304 95 310Q93 314 93 485V614Q93 664 98 664Q100 666 102 666Q103 666 123 658T178 642T253 634Q324 634 389 662Q397 666 402 666Q410 666 410 648V635Q328 538 205 538Q174 538 149 544L139 546V374Q158 388 169 396T205 412T256 420Q337 420 393 355T449 201Q449 109 385 44T229 -22Q148 -22 99 32T50 154Q50 178 61 192T84 210T107 214Q132 214 148 197T164 157Z"></path></g><g transform="translate(4891,0)"><path stroke-width="1" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g transform="translate(6169,0)"><path stroke-width="1" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g transform="translate(6947,0)"><path stroke-width="1" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g transform="translate(8226,0)"><path stroke-width="1" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z"></path></g><g transform="translate(9004,0)"><path stroke-width="1" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g transform="translate(10282,0)"><path stroke-width="1" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z"></path></g></g></svg></span>, and we print these data values as a single line of space-separated integers.</p></div></div></div></div></div></div></div></section><section class="code-editor-section split"><div><div></div><div class="codeeditor-view theme-m-section"><div id="codeshell-wrapper">
+<div class="clearfix grey-header fixed-hand0 cap plL plR psT psB" style="position: relative;">
+  <div class="msT pull-left"><em id="status-text"></em></div>
+  
+  <div class="fork-dialog cs-dialog hide">
+    <div class="header">Fork <span class="version-seq"></span>
+        <i data-analytics="CodeShellForkCode" data-attr1="Cancel" class="icon--single icon-cancel-small close-fork-dialog cursor-pointer pull-right psR"></i>
+    </div>
+    <div class="body">
+      <p class="grey-msg">past buffers are marked read only, you wont be able to edit your current buffer without forking it</p>
+      <div class="m msT">
+        <button data-analytics="CodeShellForkCode" data-attr1="ForkCurrentBuffer" class="btn btn-primary fork-version" data-action="fork">Fork <span class="version-seq"></span></button>&nbsp;&nbsp;
+        <button data-analytics="CodeShellForkCode" data-attr1="CreateNewBuffer" class="btn btn-primary fork-version" data-action="orphan">Create New Buffer</button>
+      </div>
+    </div>
+  </div>
+  <div class="fork-limit-reached-dialog cs-dialog hide">
+    <div class="header">Fork Limit Reached</div>
+    <div class="body">
+      <p class="grey-msg">You can’t create more than 20 buffers, please delete one of your old bufferes to create a new buffer.</p>
+      <div class="m msT">
+        <button class="btn close-fork-limit-reached-dialog">OK</button>&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="delete-version-dialog cs-dialog hide">
+    <div class="header">Delete <span class="version-seq"></span></div>
+    <div class="body">
+      <p class="grey-msg">Are you sure you want to delete <strong><span class="version-seq"></span></strong>? This action can’t be undone.</p>
+      <div class="m msT">
+        <button class="btn delete-version-button">Yes</button>&nbsp;&nbsp;
+      </div>
+    </div>
+  </div>
+  <div class="pull-left no-select">
+    <p style="padding-top: 8px;">
+      <strong class="version-name">Current Buffer</strong>
+      <span class="gray-text version-meta">(saved locally, editable)</span>
+      &nbsp;&nbsp;
+      <a data-analytics="CodeShellShowForkOptions" class="fork-this-version"><i class="icon--grey cursor icon-flow-branch"></i></a>
+      <a data-analytics="CodeShellShowVersionTimeline" class="show-version-timeline"><i class="icon--grey cursor icon-back-in-time"></i></a>
+      <a class="delete-active-version hide"><i class="icon--grey cursor icon-trash"></i></a>
+    </p>
+  </div>
+  
+  
+  <div class="pull-right">
+    
+    <div class="inline large lines inverse pull-right msT msL">
+      
+      
+      <a class="restorefullscreen force-hide active-link no-select">
+          <i class="icon-resize-small-alt icon--grey no-select"></i></a>
+      <a class="fullscreen active-link no-select" data-analytics="Switch to fullscreen"><i class="icon-resize-full-alt icon--grey no-select"></i></a>
+      
+      
+      
+      <a class="hide" style="display:none;"></a>
+      <div class="settings-editor" style="position:relative; margin-left: 0px;">
+        <a class="cursor no-select" data-analytics="CodeShellShowPreferences" id="show-preferences"><i class="icon-cog icon--grey no-select"></i></a>
+        <div id="pref-pane" style="position: absolute;right: -0.5em;top: 2em;z-index: 9;background: #fff;border: 1px solid #ddd;border-radius: 5px;padding: 10px;  width: 25em; display: none;">
+          <div style="position: absolute;width: 0;right: 0.8em;height: 0;border-left: 7px solid transparent;border-right: 7px solid transparent;border-bottom: 7px solid #ddd;top: -0.4em;"></div>
+          
+            <div class="formgroup horizontal">
+              <label class="span5">Editor Mode</label>
+              <div class="inline">
+                <div class="btn-group no-select">
+                  <a data-analytics="CodeShellEditorMode" data-attr1="Emacs" class="cursor emacs btn btn-small btn-white editor-mode-button no-select" data-editor="emacs">Emacs</a>
+                  <a data-analytics="CodeShellEditorMode" data-attr1="Normal" class="cursor default btn btn-small btn-white editor-mode-button no-select btn-primary" data-editor="sublime">Normal</a>
+                  <a data-analytics="CodeShellEditorMode" data-attr1="Vim" class="cursor vim btn btn-small btn-white editor-mode-button no-select" data-editor="vim">Vim</a>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="formgroup horizontal">
+              <label class="span5">Editor Theme</label>
+              <div class="inline">
+                <div class="btn-group no-select">
+                  <a data-analytics="CodeShellEditorTheme" data-attr1="Light" class="cursor light btn btn-small btn-white editor-theme-button no-select btn-primary" data-editor="light">Light</a>
+                  <a data-analytics="CodeShellEditorTheme" data-attr1="Dark" class="cursor dark btn btn-small btn-white editor-theme-button no-select" data-editor="dark">Dark</a>
+                </div>
+              </div>
+            </div>
+          
+          <div class="formgroup horizontal">
+            <label class="span5">Tab Spaces</label>
+            <div class="inline">
+              <div class="btn-group no-select">
+                <a data-analytics="CodeShellEditorSpace" data-attr1="2" class="cursor 2space btn btn-small btn-white editor-tabspace-button no-select" data-editor="2">2 spaces</a>
+                <a data-analytics="CodeShellEditorSpace" data-attr1="4" class="cursor 4space  btn btn-small btn-white editor-tabspace-button no-select btn-primary" data-editor="4">4 spaces</a>
+                <a data-analytics="CodeShellEditorSpace" data-attr1="8" class="cursor 8space btn btn-small btn-white editor-tabspace-button no-select" data-editor="8">8 spaces</a>
+              </div>
+            </div>
+          </div>
+          
+            <div class="formgroup horizontal">
+              <label class="span5">Intellisense
+              
+              <span data-balloon="Available only for C, C++, Java, Python, JavaScript, Ruby, PHP, C# and Go" data-balloon-pos="down">
+              
+              <i class="icon-info-circled fnt-sz-small txt-navy"></i>
+              </span></label>
+              <div class="inline">
+                <div class="btn-group no-select">
+                  <a data-analytics="CodeShellAutoComplete" data-attr1="Enable" class="cursor emacs btn btn-small btn-white editor-autocomplete-button no-select btn-primary" data-editor="true">Enable</a>
+                  <a data-analytics="CodeShellAutoComplete" data-attr1="Disable" class="cursor default btn btn-small btn-white editor-autocomplete-button no-select" data-editor="false">Disable</a>
+                </div>
+              </div>
+            </div>
+          
+          
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="pull-right lang-placeholder">
+      <div class="dummy-lang-container hide"></div>
+      <div class="select2-container" id="s2id_select-lang"><a href="javascript:void(0)" onclick="return false;" class="select2-choice" tabindex="-1">   <span>Java 7</span><abbr class="select2-search-choice-close"></abbr>   <div><b></b></div></a><input class="select2-focusser select2-offscreen" type="text" id="s2id_autogen21" tabindex="-1"><div class="select2-drop select2-display-none">   <div class="select2-search select2-search-hidden select2-offscreen">       <input type="text" autocomplete="off" autocorrect="off" autocapitilize="off" spellcheck="false" class="select2-input">   </div>   <ul class="select2-results">   </ul></div></div><input type="hidden" id="select-lang" tabindex="-1" class="select2-offscreen" value="java" style="display: inline-block;">
+    </div>
+    
+    <div class="clearfix"></div>
+  </div>
+</div>
+
+
+<div class="version-timeline">
+  <div class="version-timeline-inner">
+    <div class="cross-line"></div>
+    <div class="start-slab pull-left"></div>
+    
+    <div class="current-version-ball green-bkg pull-left cursor"></div>
+  </div>
+</div>
+<div class="hr_tour-code-solution movable-hand flex-row" style="display: flex;">
+  
+  <div class="code-checker">
+    <div id="notification-message" class="clearfix grey-header cap  hidden "> </div>
+    <div class="code-editors" style="max-height: 580px;">
+      
+      <div class="code-head not-allowed" style="display: block;">
+        
+        <textarea id="codeheadview" style="width: 100%; display: none;"></textarea><div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 61px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="width: 18px; pointer-events: none;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="height: 18px; pointer-events: none;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 57px; margin-bottom: 0px; border-right-width: 30px; min-height: 218px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>1</div></div><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>11</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: -57px; width: 57px;"></div><div class="CodeMirror-gutter-wrapper CodeMirror-activeline-gutter" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">1</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-folded CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">import</span> <span class="CodeMirror-widget" role="presentation" cm-ignore-events="true"><span class="CodeMirror-foldmarker">↔</span></span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">3</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Node</span>{</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">4</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">Node</span> <span class="cm-variable">left</span>,<span class="cm-variable">right</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">5</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-type">int</span> <span class="cm-variable">data</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">6</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-variable">Node</span>(<span class="cm-type">int</span> <span class="cm-variable">data</span>){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">7</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">this</span>.<span class="cm-variable">data</span><span class="cm-operator">=</span><span class="cm-variable">data</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">8</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">left</span><span class="cm-operator">=</span><span class="cm-variable">right</span><span class="cm-operator">=</span><span class="cm-atom">null</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">9</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">10</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">11</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-keyword">class</span> <span class="cm-def">Solution</span>{</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; border-bottom: 0px solid transparent; top: 218px;"></div><div class="CodeMirror-gutters" style="height: 248px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-lint-markers"></div><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div><div class="CodeMirror-gutter CodeMirror-foldgutter"></div></div></div></div>
+      </div> 
+       <div class="loading-mode" style="display: none;">Loading Editor... </div> 
+      <div class="code-body" style="display: block;">
+        
+       <textarea id="codeview" style="width: 100%; display: none;"></textarea><div class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 214px; left: 480.859px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="width: 18px; pointer-events: none;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="height: 18px; pointer-events: none;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 57px; margin-bottom: 0px; border-right-width: 30px; min-height: 470px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre>x</pre></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors" style="visibility: hidden;"><div class="CodeMirror-cursor" style="left: 423.859px; top: 210px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">12</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">static</span> <span class="cm-type">void</span> <span class="cm-def">levelOrder</span>(<span class="cm-variable">Node</span> <span class="cm-variable">root</span>){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">13</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;<span class="cm-comment">//Write your code here</span></span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">14</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">Queue</span><span class="cm-operator">&lt;</span><span class="cm-variable">Node</span><span class="cm-operator">&gt;</span> <span class="cm-variable">queue</span> <span class="cm-operator">=</span> <span class="cm-keyword">new</span> <span class="cm-variable">LinkedList</span><span class="cm-operator">&lt;&gt;</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">15</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">16</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">root</span> <span class="cm-operator">!=</span> <span class="cm-atom">null</span>){</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">17</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">queue</span>.<span class="cm-variable">add</span>(<span class="cm-variable">root</span>);</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">18</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">19</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-operator">!</span>(<span class="cm-variable">queue</span>.<span class="cm-variable">isEmpty</span>())){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">20</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <span class="cm-variable">Node</span> <span class="cm-variable">tree</span> <span class="cm-operator">=</span> <span class="cm-variable">queue</span>.<span class="cm-variable">remove</span>();</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">21</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;" class="CodeMirror-activeline"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: -57px; width: 57px;"></div><div class="CodeMirror-gutter-wrapper CodeMirror-activeline-gutter" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">22</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">System</span>.<span class="cm-variable">out</span>.<span class="cm-variable">print</span>(<span class="cm-variable">tree</span>.<span class="cm-variable">data</span> <span class="cm-operator">+</span> <span class="cm-string">" "</span>);</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">23</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">24</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">tree</span>.<span class="cm-variable">left</span> <span class="cm-operator">!=</span> <span class="cm-atom">null</span>){</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">25</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">queue</span>.<span class="cm-variable">add</span>(<span class="cm-variable">tree</span>.<span class="cm-variable">left</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">26</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">27</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">if</span>(<span class="cm-variable">tree</span>.<span class="cm-variable">right</span> <span class="cm-operator">!=</span> <span class="cm-atom">null</span>){</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">28</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">queue</span>.<span class="cm-variable">add</span>(<span class="cm-variable">tree</span>.<span class="cm-variable">right</span>);</span></pre></div><div class="" style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">29</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">30</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">31</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">32</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;</span></pre></div><div style="position: relative;" class=""><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">33</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp;  }</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; border-bottom: 0px solid transparent; top: 470px;"></div><div class="CodeMirror-gutters" style="height: 500px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-lint-markers"></div><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div><div class="CodeMirror-gutter CodeMirror-foldgutter"></div></div></div></div>
+       </div>
+      
+      <div class="code-tail not-allowed" style="display: block;">
+        
+        <textarea id="codetailview" style="width: 100%; display: none;"></textarea><div class="CodeMirror cm-s-default CodeMirror-wrap"><div style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 61px;"><textarea autocorrect="off" autocapitalize="off" spellcheck="false" style="position: absolute; bottom: -1em; padding: 0px; width: 1000px; height: 1em; outline: none;" tabindex="0"></textarea></div><div class="CodeMirror-vscrollbar" tabindex="-1" cm-not-content="true" style="width: 18px; pointer-events: none; bottom: 0px;"><div style="min-width: 1px; height: 0px;"></div></div><div class="CodeMirror-hscrollbar" tabindex="-1" cm-not-content="true" style="height: 18px; pointer-events: none;"><div style="height: 100%; min-height: 1px; width: 0px;"></div></div><div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div><div class="CodeMirror-gutter-filler" cm-not-content="true"></div><div class="CodeMirror-scroll" tabindex="-1"><div class="CodeMirror-sizer" style="margin-left: 57px; margin-bottom: 0px; border-right-width: 30px; min-height: 260px; padding-right: 0px; padding-bottom: 0px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-lines" role="presentation"><div role="presentation" style="position: relative; outline: none;"><div class="CodeMirror-measure"><pre><span>xxxxxxxxxx</span></pre><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>1</div></div><div class="CodeMirror-linenumber CodeMirror-gutter-elt"><div>33</div></div></div><div class="CodeMirror-measure"></div><div style="position: relative; z-index: 1;"></div><div class="CodeMirror-cursors"><div class="CodeMirror-cursor" style="left: 4px; top: 0px; height: 21px;">&nbsp;</div></div><div class="CodeMirror-code" role="presentation" style=""><div class="CodeMirror-activeline" style="position: relative;"><div class="CodeMirror-activeline-background CodeMirror-linebackground"></div><div class="CodeMirror-gutter-background CodeMirror-activeline-gutter" style="left: -57px; width: 57px;"></div><div class="CodeMirror-gutter-wrapper CodeMirror-activeline-gutter" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">34</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-folded CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"><span class="cm-tab" role="presentation" cm-text="	">    </span><span class="cm-keyword">public</span> <span class="cm-keyword">static</span> <span class="cm-variable">Node</span> <span class="cm-def">insert</span>(<span class="cm-variable">Node</span> <span class="cm-variable">root</span>,<span class="cm-type">int</span> <span class="cm-variable">data</span>){<span class="CodeMirror-widget" role="presentation" cm-ignore-events="true"><span class="CodeMirror-foldmarker">↔</span></span>}</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">51</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp;<span class="cm-keyword">public</span> <span class="cm-keyword">static</span> <span class="cm-type">void</span> <span class="cm-def">main</span>(<span class="cm-type">String</span> <span class="cm-variable">args</span>[]){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">52</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">Scanner</span> <span class="cm-variable">sc</span><span class="cm-operator">=</span><span class="cm-keyword">new</span> <span class="cm-variable">Scanner</span>(<span class="cm-variable">System</span>.<span class="cm-variable">in</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">53</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-type">int</span> <span class="cm-variable">T</span><span class="cm-operator">=</span><span class="cm-variable">sc</span>.<span class="cm-variable">nextInt</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">54</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">Node</span> <span class="cm-variable">root</span><span class="cm-operator">=</span><span class="cm-atom">null</span>;</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">55</div><div class="CodeMirror-gutter-elt" style="left: 45px; width: 11px;"><div class="CodeMirror-foldgutter-open CodeMirror-guttermarker-subtle"></div></div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-keyword">while</span>(<span class="cm-variable">T</span><span class="cm-operator">--&gt;</span><span class="cm-number">0</span>){</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">56</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-type">int</span> <span class="cm-variable">data</span><span class="cm-operator">=</span><span class="cm-variable">sc</span>.<span class="cm-variable">nextInt</span>();</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">57</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">root</span><span class="cm-operator">=</span><span class="cm-variable">insert</span>(<span class="cm-variable">root</span>,<span class="cm-variable">data</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">58</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  }</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">59</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="cm-variable">levelOrder</span>(<span class="cm-variable">root</span>);</span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">60</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" class="cm-tab-wrap-hack" style="padding-right: 0.1px;"> &nbsp; &nbsp; &nbsp;  }<span class="cm-tab" role="presentation" cm-text="	">   </span></span></pre></div><div style="position: relative;"><div class="CodeMirror-gutter-wrapper" style="left: -57px;"><div class="CodeMirror-linenumber CodeMirror-gutter-elt" style="left: 16px; width: 21px;">61</div></div><pre class=" CodeMirror-line " role="presentation"><span role="presentation" style="padding-right: 0.1px;">}</span></pre></div></div></div></div></div></div><div style="position: absolute; height: 30px; width: 1px; border-bottom: 0px solid transparent; top: 260px;"></div><div class="CodeMirror-gutters" style="height: 290px; left: 0px;"><div class="CodeMirror-gutter CodeMirror-lint-markers"></div><div class="CodeMirror-gutter CodeMirror-linenumbers" style="width: 29px;"></div><div class="CodeMirror-gutter CodeMirror-foldgutter"></div></div></div></div>
+      </div> 
+      <div class="clearfix"></div>
+    </div>
+    <div id="codeeditor-statusbar" class="clearfix psA codeeditor_statusbar">
+      <span id="statusbar-mode"></span>
+      <div class="pull-right">
+        <span id="statusbar-line">Line: 22</span>
+        <span id="statusbar-col">Col: 51</span>
+        <span id="statusbar-count"></span>
+      </div>
+    </div>
+  </div>
+</div><div class="clearfix pmR pmL pmB plT fixed-hand1 codeshell-footer">
+  <div class="pull-right">
+    
+    
+    <button class="btn bb-compile msR " data-analytics="Compile and Test">Run Code</button>
+    
+    
+    <button class="btn btn-primary bb-submit ans-submit" data-analytics="Submit Code">Submit Code</button>
+    
+    
+  </div>
+  <div class="pull-left inline">
+      
+      <button class="btn btn-text upload_file mlR" data-analytics="Upload File" type="button"><i class="icon-upload"></i>Upload Code as File</button>
+      
+      
+      
+      <div class="mmT">
+          <label for="customtestcase"><div class="custom-checkbox-v3"><input type="checkbox" id="customtestcase"><span></span></div><span class="lmT msL">Test against custom input</span></label>
+          
+          <textarea rows="5" id="custominput" style="display:none"></textarea>
+          
+      </div>
+      
+  </div>
+  
+</div></div><div id="submission-message"></div><div class="__react_component_tooltip place-top type-dark " data-id="tooltip"></div></div></div><div class="challenge-response fs-container"><div class="output-area-wrap"><div class="output-area mlT psT" id="output-area"><div class="code-compile-test-view theme-m-content"><div class="compile-error-wrapper"><p class="status compile-error">Wrong Answer :(</p><p class="compile-advice">Your code did not pass all the sample testcases.</p></div><div class="compile-tests-view"><div><div class="ui-tabs-wrap"><div class="render-list clearfix"><ul class="tab-header"><li class="tab-item active"><a data-analytics="TestCaseResultsTab" data-attr1="RunCode" data-attr2="master" data-attr3="30-binary-trees" data-attr5="0" class="tab-item-color-error"><i class="ui-icon-cross"></i><span class="ui-icon-label tab-item-label"> Testcase 0</span></a></li></ul></div></div></div><div class="tab-list-content tab-content tab-pane-error"><div class="tab-pane-content"><div class="flex-block compilation-time-response full-width"><div class="stdin run-time-message flex-display"><div class="compile-field-label">Input (stdin)</div><pre class="compile-output-message"><code class="bold">6
+3
+5
+4
+7
+2
+1</code></pre></div><div class="stdout run-time-message flex-display"><div class="compile-field-label">Your Output (stdout)</div><pre class="compile-output-message"><code class="bold">3 
+2 
+5 
+1 
+4 
+7 
+</code></pre></div><div class="expected-output run-time-message flex-display"><div class="compile-field-label">Expected Output</div><pre class="compile-output-message"><code class="bold">3 2 5 1 4 7</code></pre></div><div class="compiler-message run-time-message flex-display"><div class="compile-field-label">Compiler Message</div><pre class="compile-output-message"><code class="bold">Wrong Answer</code></pre></div></div></div></div></div></div></div></div></div></section></div><div class="right-pane"><aside class="theme-m-content fullscreen-hide challenge-sidebar"><div class="challenge-sidebar-container"><div class="sidebar-problem-difficulty challenge-sidebar-help"><div class="difficulty-block"><p class="difficulty-label">Author</p><a class="pull-right text-link" data-analytics="ChallengeViewHeaderAuthor" data-attr1="30-binary-trees" data-attr2="vatsalchanana" href="https://www.hackerrank.com/profile/vatsalchanana">vatsalchanana</a></div><div class="difficulty-block"><p class="difficulty-label">Difficulty</p><p class="pull-right difficulty-easy">Easy</p></div><div class="difficulty-block"><p class="difficulty-label">Max Score</p><p class="sidebar-detail pull-right">30</p></div><div class="difficulty-block"><p class="difficulty-label">Submitted By</p><a class="pull-right text-link" data-analytics="ChallengeViewHackerCount" data-attr1="30-binary-trees" href="https://www.hackerrank.com/challenges/30-binary-trees/leaderboard">39371</a></div></div><div class="challenge-sidebar-help"><h2 class="text-sec-headline-s">Need Help?</h2><hr class="hr-line-light"><div class="mlB"><div class="link-wrapper"><a data-analytics="ChallengeSidebarUI" data-attr1="tutorial" data-attr2="30-binary-trees" data-attr3="master" href="https://www.hackerrank.com/challenges/30-binary-trees/tutorial"><i class="ui-icon-tutorial ui-icon-grey sidebar-icon"></i><span class="ui-icon-label">View tutorial</span></a></div><div class="link-wrapper"><a data-analytics="ChallengeSidebarUI" data-attr1="discussions" data-attr2="30-binary-trees" data-attr3="master" href="https://www.hackerrank.com/challenges/30-binary-trees/forum"><i class="ui-icon-discussion ui-icon-grey sidebar-icon"></i><span class="ui-icon-label">View discussions</span></a></div><div class="link-wrapper"><a data-analytics="ChallengeSidebarUI" data-attr1="editorial" data-attr2="30-binary-trees" data-attr3="master" href="https://www.hackerrank.com/challenges/30-binary-trees/editorial"><i class="ui-icon-editorial ui-icon-grey sidebar-icon"></i><span class="ui-icon-label">View editorial</span></a></div><div class="link-wrapper"><a data-analytics="ChallengeSidebarUI" data-attr1="topscorers" data-attr2="30-binary-trees" data-attr3="master" href="https://www.hackerrank.com/challenges/30-binary-trees/leaderboard"><i class="ui-icon-trophy ui-icon-grey sidebar-icon"></i><span class="ui-icon-label">View top submissions</span></a></div></div></div><div class="challenge-rating rating"><p class="zeta rating-label">rate this challenge</p><div class="rating"><i class="rating-icon cursor ui-icon-star" data-analytics="RatedChallenge" data-attr7="1"></i><i class="rating-icon cursor ui-icon-star" data-analytics="RatedChallenge" data-attr7="2"></i><i class="rating-icon cursor ui-icon-star" data-analytics="RatedChallenge" data-attr7="3"></i><i class="rating-icon cursor ui-icon-star" data-analytics="RatedChallenge" data-attr7="4"></i><i class="rating-icon cursor ui-icon-star" data-analytics="RatedChallenge" data-attr7="5"></i></div></div><div class="challenge-sidebar-help need-help-wrapper"><div class="text-sec-headline-s">MORE DETAILS</div><hr class="hr-line-light"><div class="link-wrapper"><a target="_blank" id="pdf-link" data-analytics="ChallengeViewSidebarPDF" data-attr1="30-binary-trees" href="https://www.hackerrank.com/rest/contests/master/challenges/30-binary-trees/download_pdf?language=English"><i class="ui-icon-grey sidebar-icon ui-icon-download"></i><span class="ui-icon-label">Download problem statement</span></a></div><div class="link-wrapper"><a target="_blank" id="test-cases-link" data-analytics="ChallengeViewSidebarTestCases" data-attr1="30-binary-trees" href="https://www.hackerrank.com/rest/contests/master/challenges/30-binary-trees/download_testcases"><i class="ui-icon-grey sidebar-icon ui-icon-download"></i><span class="ui-icon-label">Download sample test cases</span></a></div><div class="link-wrapper fullscreen-hide"><a class="cursor" data-analytics="ChallengeViewSuggestEdit" data-attr1="30-binary-trees"><i class="ui-icon-grey sidebar-icon ui-icon-edit"></i><span class="ui-icon-label">Suggest Edits</span></a></div></div><div class="social-share-wrap-2"><div class="clearfix"><div class="social-links-wrapper pull-left"><a class="cursor"><i class="social-share-icon ui-icon-facebook"></i></a><a class="cursor"><i class="social-share-icon ui-icon-twitter"></i></a><a class="cursor"><i class="social-share-icon ui-icon-linkedin"></i></a></div></div></div></div></aside></div></div></div></div></section></div></div><footer class="community-footer"><ul class="footer-links"><li class="link-item"><a target="_blank" class="footer-link calendar" data-analytics="FooterLinkCalendar" href="https://www.hackerrank.com/calendar">Contest Calendar</a></li><li class="link-item"><a target="_blank" class="footer-link blog" data-analytics="FooterLinkBlog" href="https://blog.hackerrank.com/">Blog</a></li><li class="link-item"><a target="_blank" class="footer-link scoring" data-analytics="FooterLinkScoring" href="https://www.hackerrank.com/scoring">Scoring</a></li><li class="link-item"><a target="_blank" class="footer-link environment" data-analytics="FooterLinkEnvironment" href="https://www.hackerrank.com/environment">Environment</a></li><li class="link-item"><a target="_blank" class="footer-link faq" data-analytics="FooterLinkFAQ" href="https://www.hackerrank.com/faq">FAQ</a></li><li class="link-item"><a target="_blank" class="footer-link" data-analytics="FooterLinkAboutUs" href="https://www.hackerrank.com/aboutus">About Us</a></li><li class="link-item"><a target="_blank" class="footer-link" data-analytics="FooterLinkSupport" href="https://help.hackerrank.com/hc/en-us">Support</a></li><li class="link-item"><a target="_blank" class="footer-link" data-analytics="FooterLinkCareers" href="https://www.hackerrank.com/careers">Careers</a></li><li class="link-item"><a target="_blank" class="footer-link" data-analytics="FooterLinkTermsOfService" href="https://www.hackerrank.com/terms-of-service">Terms Of Service</a></li><li class="link-item"><a target="_blank" class="footer-link" data-analytics="FooterLinkPrivacyPolicy" href="https://www.hackerrank.com/privacy">Privacy Policy</a></li><li class="link-item"><a target="_blank" class="footer-link featureRequestButton" data-analytics="FooterLinkFeatureRequest" href="https://www.hackerrank.com/support/feature">Request a Feature</a></li></ul></footer></div></div></div><!--Required to handle event bubbling of click in ios safari -->
+
+  <script>
+    //HR namespace
+    var HR = {};
+    HR.development = false;
+    HR.assetPath = 'https://hrcdn.net/hackerrank/assets/';
+    HR.pageLoadTime = Date.now();
+    HR.productNamespace = 'hackerrank';
+    HR.production = true;
+    HR.devServer = false;
+    HR.isIsomorphic = true;
+    HR.loadedWithOldCss = false;
+    HR.pusher = '{"key":"a280047e3b323ccb1b65","cluster":"mt1"}';
+  </script>
+
+  <!-- Vendor scripts -->
+  
+    <script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_vendor-5bc167c024.js"></script>
+  
+
+  
+  <script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/runtime-2481bf0384e2deb4c9c0.js"></script>
+  <script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/hackerrank_r_app-87555ca29cfe72641a07.js"></script>
+  
+<script>
+  var getUser = (function() {
+    var userData;
+    $(window).on('initializeNewUser', function(e, user) {
+      userData = user;
+    });
+    try{
+      if (typeof userData === 'undefined') {
+        userData = JSON.parse(decodeURI($('#initialUserData').html()));
+        $('#initialUserData').remove();
+      }
+    } catch(e){
+      userData = {};
+      console.log('No initial User data found');
+    }
+    return function() {
+      return userData;
+    }
+  })();
+</script>
+
+<!-- setting up sentry -->
+
+  <script src="./Day 23_ BST Level-Order Traversal _ HackerRank_files/raven.min.js" async="" crossorigin="anonymous" id="raven"></script>
+  <script>
+    (function(window, queue, loaded, script, user) {
+
+        var setupRaven = function(user) {
+          var userContext = {};
+          if (user && !!user.id) {
+            userContext.handle = user.id;
+          }
+          var extraContext = {
+            cdnUrl: Cookies.get("cdn_url")
+          }
+          if (Cookies) {
+            if (HR.productNamespace === 'hackerrank') {
+              extraContext.mixpanel_token = Cookies.get('hackerrank_mixpanel_token')
+            } else if (HR.productNamespace === 'hackerrankx') {
+              extraContext.mixpanel_token = Cookies.get('hackerrankx_mixpanel_token')
+            }
+          }
+          if(typeof Raven !== 'undefined') {
+            Raven.setUserContext(userContext);
+            Raven.setExtraContext(extraContext);
+          }
+        }
+        $(window).on('initializeNewUser', function(e, user) {
+          setupRaven(user);
+        });
+
+        window.onerror = function e(message, file, lineNo, columnNo, error) {
+            if (loaded) return;
+            queue.push([message, file, lineNo, columnNo, error]);
+        };
+
+        window.onunhandledrejection = function e(error) {
+            if (loaded) return;
+            queue.push([
+                error.reason,
+            ]);
+        };
+
+        script.onreadystatechange = script.onload = function() {
+            if (loaded) return;
+            loaded = true;
+
+            Raven.config('https://6b2d52b23d5a4dd4bc44330335327c04@sentry.io/234162', {
+                release: "57bf09e6ff26feb0973850d59dfdc06687297868",
+                ignoreUrls: [/cdn\.userty\.com/]
+            }).install();
+
+            setupRaven(user);
+
+            window.onunhandledrejection = function e(error) {
+                Raven.captureException(error.reason, {
+                    extra: {
+                        type: error.type,
+                    },
+                });
+            };
+
+            queue.forEach(function(error) {
+                Raven.captureException(error[4] || error[0], {
+                    extra: {
+                        file: error[1],
+                        line: error[2],
+                        col: error[3],
+                    },
+                });
+            });
+        };
+    }(window, [], false, document.getElementById('raven'), getUser()));
+ </script>
+
+
+
+
+<!-- google analytics tracking -->
+<script>
+  var _gaq = _gaq || [];
+  
+  _gaq.push(['candidate_company._setAccount', 'UA-45092266-1']);
+  _gaq.push(['candidate_company._trackPageview']);
+  _gaq.push(['candidate_company._gat._anonymizeIp']);
+  _gaq.push(['_setCampSourceKey', 'utm_source']);
+  _gaq.push(['_setCampMediumKey', 'utm_medium']);
+  _gaq.push(['_setCampContentKey', 'utm_keyword']);
+  _gaq.push(['_setCampTermKey', 'utm_keyword']);
+  _gaq.push(['_setCampNameKey', 'utm_campaign']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  
+</script>
+<!-- Pending candidate site custom GA code -->
+<!-- google analytics tracking end-->
+
+<!-- mixpanel tracking -->
+<script type="text/javascript">
+  
+    (function(e,a){if(!a.__SV){var b=window;try{var c,l,i,j=b.location,g=j.hash;c=function(a,b){return(l=a.match(RegExp(b+"=([^&]*)")))?l[1]:null};g&&c(g,"state")&&(i=JSON.parse(decodeURIComponent(c(g,"state"))),"mpeditor"===i.action&&(b.sessionStorage.setItem("_mpcehash",g),history.replaceState(i.desiredHash||"",e.title,j.pathname+j.search)))}catch(m){}var k,h;window.mixpanel=a;a._i=[];a.init=function(b,c,f){function e(b,a){var c=a.split(".");2==c.length&&(b=b[c[0]],a=c[1]);b[a]=function(){b.push([a].concat(Array.prototype.slice.call(arguments,
+0)))}}var d=a;"undefined"!==typeof f?d=a[f]=[]:f="mixpanel";d.people=d.people||[];d.toString=function(b){var a="mixpanel";"mixpanel"!==f&&(a+="."+f);b||(a+=" (stub)");return a};d.people.toString=function(){return d.toString(1)+".people (stub)"};k="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");
+for(h=0;h<k.length;h++)e(d,k[h]);a._i.push([b,c,f])};a.__SV=1.2;b=e.createElement("script");b.type="text/javascript";b.async=!0;b.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\/\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";c=e.getElementsByTagName("script")[0];c.parentNode.insertBefore(b,c)}})(document,window.mixpanel||[]);
+    mixpanel.init("bcb75af88bccc92724ac5fd79271e1ff");
+
+    
+      
+        mixpanel.init("86cf4681911d3ff600208fdc823c5ff5", {}, "jobs_test");
+      
+      mixpanel.identify(Cookies.get("hackerrank_mixpanel_token"));
+    
+  
+</script>
+<!-- mixpanel tracking end-->
+
+<!-- auryc tracking start -->
+<script type="text/javascript">
+  
+</script>
+<!-- auryc tracking end -->
+
+<!-- Marketo to be added later -->
+
+
+
+<!-- Bizible -->
+
+<!-- HR metrics init -->
+<script type="text/javascript">
+
+  (function() {
+    hr_metrics.init({
+      product: 'hackerrank',
+      use_cookie: true,
+      uid_cookie_key: 'hackerrank_mixpanel_token',
+      uid_token_cookie_key: 'metrics_user_identifier',
+      session_cookie_key: 'session_id',
+      metrics_endpoint:  'https://metrics.hackerrank.com/metrics' 
+    });
+  })();
+
+  (function(h) {
+    window.hr_metrics = h;
+    if (!h.loaded) {
+      var a = ['track', 'batch_track', 'app_track', 'externalService', 'init', 'batch_track_record', 'track_dwell_time', 'set_navigation_data'];
+      for (var i = 0; i < a.length; i++) {
+        if (!h[a[i]]) {h[a[i]] = function() {};}
+      }
+    }
+  })(window.hr_metrics || {});
+
+
+
+</script>
+
+<!-- hrutm_params -->
+
+<!-- HR metrics extension pack -->
+<script type="text/javascript">
+
+  
+    if (('performance' in window) && ('timing' in window.performance)) {
+      $(window).on("load", function() {
+        setTimeout(function(){
+          var timing = window.performance.timing;
+          var obj = {
+            referring_url: window.location.pathname,
+            fullLoadTime: timing.loadEventEnd - timing.navigationStart,
+            // Total time from req start to load
+            loadTime: timing.loadEventEnd - timing.fetchStart,
+            // Time spent constructing the DOM tree
+            domReadyTime: timing.domComplete - timing.domInteractive,
+            // Time consumed preparing the new page
+            readyStart: timing.fetchStart - timing.navigationStart,
+            // Time spent during redirection
+            redirectTime: timing.redirectEnd - timing.redirectStart,
+            // AppCache
+            appcacheTime: timing.domainLookupStart - timing.fetchStart,
+            // Time spent unloading documents
+            unloadEventTime: timing.unloadEventEnd - timing.unloadEventStart,
+            // DNS query time
+            lookupDomainTime: timing.domainLookupEnd - timing.domainLookupStart,
+            // TCP connection time
+            connectTime: timing.connectEnd - timing.connectStart,
+            // Time spent during the request
+            requestTime: timing.responseEnd - timing.requestStart,
+            // Request to completion of the DOM loading
+            initDomTreeTime: timing.domInteractive - timing.responseEnd,
+            // Load event time
+            loadEventTime: timing.loadEventEnd - timing.loadEventStart,
+            // Origin of the request
+            react: true,
+            //isIsomorphic flag
+            isIsomorphic: window.HR.isIsomorphic,
+            //old css loaded flag
+            loadedWithOldCss: window.HR.loadedWithOldCss,
+          }
+
+          if (('navigation' in window.performance) && ('getEntries' in window.performance)) {
+            obj.navigationType = window.performance.navigation.type;
+            obj.navigationRedirectCount = window.performance.navigation.redirectCount;
+            if (obj.fullLoadTime > 8000) {
+              try {
+                var entries = window.performance.getEntries();
+                if(entries[0].toJSON){
+                  obj.networkRequests = entries.map(function(e) {return e.toJSON();});
+                }
+              } catch (e) {
+                //do nothing
+              }
+            }
+          }
+
+          hr_metrics.app_track('page-load-metrics', obj);
+        }, 1000);
+      });
+    }
+  
+
+  $(window).on("load", function() {
+      var _pathname = document.location.pathname;
+      var cdn_url_switched = Cookies.get("cdn_url_switched");
+      if (cdn_url_switched !== '') {
+        Cookies.remove('cdn_url_switched');
+      }
+      hr_metrics.batch_track('PageLoad', _pathname + document.location.search, {
+          attribute1: _pathname,
+          attribute6: cdn_url_switched,
+          cdn_url: Cookies.get("cdn_url")
+      });
+
+      if (hr_metrics.track_dwell_time) {
+          hr_metrics.track_dwell_time(_pathname);
+          hr_metrics.set_navigation_data();
+      }
+
+      $(window).on('beforeunload', function(){
+
+          var _pathname = document.location.pathname;
+          hr_metrics.batch_track('PageClose', _pathname + document.location.search, {
+              attribute2: _pathname
+          });
+
+          hr_metrics.track_dwell_time(_pathname, true);
+
+          hr_metrics.batch_track_record(true);
+      });
+
+  });
+
+</script>
+
+<!-- Facebook SDK -->
+<!-- Twitter SDK -->
+
+<!-- track button clicks -->
+<script>
+    $(document).on('click', 'a, button, input, select, i, div, span, h5', null, function(e) {
+        var src = e.currentTarget, $src = $(e.currentTarget);
+        if ($src.attr('data-analytics')) {
+            action = 'Click'; data = $src.attr('data-analytics');
+        } else {
+            return;
+        }
+
+        
+          hr_metrics.batch_track(action, data, (function() {
+              var params={};
+              for (var _i=1; _i<=12; ++_i){
+                  var _attr = 'data-attr'+_i;
+                  if ($src.attr(_attr)){
+                    params['attribute'+_i] = $src.attr(_attr);
+                  }
+              }
+              var attributes = src.attributes, attr_length = src.attributes.length;
+              for (var i = 0; i < attr_length; i++){
+                var attribute = attributes[i];
+                if (attribute.name.indexOf('data-attr-') === 0){
+                  param_name = attribute.name.substr('data-attr-'.length);
+                  if (param_name.length > 0) {
+                    params[param_name] = attribute.value;
+                  }
+                }
+              }
+              return params;
+          })());
+        
+
+        
+          // google analytics
+          _gaq.push(['_trackEvent', 'Events' , action, data])
+        
+    });
+
+    $(document).on('AnalyticsEvent', function(e) {
+        action = e.event_type || false;
+        data = e.event_name || false;
+
+        if (!action || !data) {
+          return;
+        }
+
+        params = {}
+        params['attribute1'] = e.event_value || ""
+        params['attribute7'] = e.integer_event_value
+
+        if (window.HR && window.HR.current_page) {
+          params['attribute2'] = window.HR.current_page;
+        }
+
+        if (window.HR && window.HR.current_contest) {
+          params['attribute3'] = window.HR.current_contest.get('name');
+        }
+
+        
+            hr_metrics.batch_track(action, data, params);
+        
+
+        
+          // google analytics
+          _gaq.push(['_trackEvent', 'Events' , action, data]);
+        
+    });
+
+  </script>
+<!-- track button clicks end-->
+
+<!-- Linkedin Insights -->
+
+
+
+
+</body></html>
