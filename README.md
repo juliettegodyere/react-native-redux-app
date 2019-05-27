@@ -1,4 +1,6 @@
-#Micropay GO
+#Exercise app
+
+#Built with React native, Redux, Native base, redux-persist, react-native-router-flux etc 
 
 ##Dependencies
 1. Node version 10
